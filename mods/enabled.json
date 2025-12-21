@@ -1,0 +1,13 @@
+{
+  "enabled": [
+    "pierce-character"
+  ],
+  "loadOrder": [
+    "pierce-character"
+  ],
+  "settings": {
+    "autoLoadMods": true,
+    "validateCompatibility": true,
+    "allowExperimentalMods": false
+  }
+}

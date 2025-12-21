@@ -1,5 +1,5 @@
 import { BaseWeapon } from '../BaseWeapon.js';
-import { Game, ctx } from '../../engine/Game.js';
+import { Game, ctx } from '../../Game.js';
 import { Bullet } from '../Bullet.js';
 
 export class CardThrower extends BaseWeapon {

@@ -173,9 +173,7 @@ ShapeSlayer is a bullet-hell style survival game where you:
 ```
 ShapeSlayer/
 ├── index.html              # Game entry point
-├── styles.css              # Game styling
 ├── README.md               # This documentation
-├── MODDING_GUIDE.md        # Mod system guide
 ├── MODULAR_GUIDE.md        # Development guide
 ├── data/                   # Game configuration
 │   ├── characters.json     # Character definitions  
@@ -184,36 +182,18 @@ ShapeSlayer/
 │   ├── traits.json         # Character trait effects
 │   ├── upgrades.json       # Upgrade system data
 │   └── gameSettings.json   # Global game settings
-├── mods/                   # Mod system
-│   ├── enabled.json        # Enabled mods list
-│   ├── mod-template/       # Template for new mods
-│   └── pierce-character/   # Example mod
-└── src/                    # Source code (modular architecture)
-    ├── engine/             # Core game engine
-    │   ├── main.js         # Game entry point & coordination
-    │   ├── Game.js         # Game state management
-    │   ├── GameInitializer.js  # Configuration loading
-    │   ├── GameLoop.js     # Update & render loops
-    │   ├── GameStarter.js  # Game start logic
-    │   └── EventHandlers.js # Input & event handling
-    ├── entities/           # Game entities
-    │   ├── Player.js       # Player logic & rendering
-    │   ├── Enemy.js        # Enemy AI & rendering
-    │   └── Gem.js          # XP gem system
-    ├── projectiles/        # Projectile effects
-    │   ├── Explosion.js    # Explosion effects
-    │   ├── Orbital.js      # Orbital mechanics
-    │   └── PoisonPuddle.js # Poison area effects
-    ├── powerups/           # Power-up system
-    │   └── Powerup.js      # Power-up items
-    ├── characters/         # Character system
-    │   ├── CharacterManager.js      # Character data management
-    │   ├── CharacterSelectionScreen.js  # Character UI
-    │   ├── ConfigManager.js # Configuration loader
-    │   └── SelectionScreen.js # Upgrade selection UI
-    ├── mods-system/        # Mod system (⚠️ IN DEVELOPMENT)
-    │   ├── ModManager.js   # Mod discovery & loading
-    │   └── ModManagerScreen.js  # Mod management UI
+└── src/                    # Source code
+    ├── main.js             # Core game loop
+    ├── Game.js             # Game state management
+    ├── Player.js           # Player logic & rendering
+    ├── Enemy.js            # Enemy AI & rendering  
+    ├── ConfigManager.js    # Configuration loader
+    ├── CharacterManager.js # Character selection
+    ├── Explosion.js        # Explosion effects
+    ├── Gem.js              # XP gems
+    ├── Orbital.js          # Orbital mechanics
+    ├── PoisonPuddle.js     # Area denial effects
+    ├── Powerup.js          # Power-up items
     └── weapons/            # Weapon system
         ├── BaseWeapon.js   # Base weapon class
         ├── Bullet.js       # Projectile management
@@ -286,20 +266,6 @@ ShapeSlayer/
 
 ## 🛠️ Development
 
-### 🔧 Mod System (⚠️ IN DEVELOPMENT)
-
-ShapeSlayer includes a modding system that allows custom characters, weapons, and gameplay mechanics. **The mod system is currently under active development and may have issues or incomplete features.**
-
-For modding documentation, see [MODDING_GUIDE.md](MODDING_GUIDE.md).
-
-**Status:**
-- ✅ Mod discovery and loading
-- ✅ Custom character support
-- ✅ Custom weapon integration
-- ⚠️ Mod manager UI (testing)
-- 🚧 Documentation (in progress)
-- 🚧 Stability improvements (ongoing)
-
 ### Adding New Weapons
 1. Create weapon class in `src/weapons/types/`
 2. Add import to `WeaponFactory.js`
@@ -345,53 +311,8 @@ All game balance is controlled via JSON files in `/data/`:
 - Poison bypass system
 - Visual shield indicators
 
-## 📋 Changelog
-
-### Version 1.2.0 *(December 25, 2025)*
-
-#### 🏗️ **Major Refactoring**
-- **Modular Architecture**: Complete codebase reorganization into logical folder structure
-  - `src/engine/` - Core game engine (main, Game, GameInitializer, GameLoop, GameStarter, EventHandlers)
-  - `src/entities/` - Game entities (Player, Enemy, Gem)
-  - `src/projectiles/` - Projectile effects (Explosion, Orbital, PoisonPuddle)
-  - `src/powerups/` - Power-up system
-  - `src/characters/` - Character management system
-  - `src/weapons/` - Weapon system with types
-  - `src/mods-system/` - Mod framework (⚠️ in development)
-
-#### ✨ **Features & Improvements**
-- **Separated HTML/CSS**: External `styles.css` for better maintainability
-- **Modular main.js**: Split 600-line file into 5 focused modules
-  - GameInitializer - Configuration loading
-  - GameLoop - Update/render cycles
-  - GameStarter - Game initialization
-  - EventHandlers - Input handling
-  - main.js - Coordination (40 lines)
-
-#### 🔧 **Gameplay Changes**
-- **Removed Legacy Evolution System**: Replaced hardcoded level 5 "evolution" menu with normal upgrade system
-- **Unified Upgrade Flow**: All level-ups now use consistent weapon upgrade menu
-- **Better Mod System Integration**: Dynamic imports for mod characters and weapons
-
-#### 🐛 **Bug Fixes**
-- Fixed mod loading paths after folder reorganization
-- Fixed dynamic import paths for ModManager
-- Fixed weapon factory mod weapon loading
-- Fixed all relative import paths throughout codebase
-
-#### 📚 **Documentation**
-- Updated README with new project structure
-- Updated MODDING_GUIDE with development status
-- Added development warnings for mod system
-- Documented all folder organization changes
-
-#### ⚠️ **Known Issues**
-- Mod system still in active development
-- Some mod features may be unstable
-- Testing and stabilization ongoing
-
 ---
 
 **Have fun surviving the geometric apocalypse! 🎮💀**
 
-*Created with ❤️ for fast-paced action and strategic depth*
+

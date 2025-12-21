@@ -1,7 +1,7 @@
 import { BaseWeapon } from '../BaseWeapon.js';
 import { Bullet } from '../Bullet.js';
-import { Game } from '../../engine/Game.js';
-import { gameConfig } from '../../characters/ConfigManager.js';
+import { Game } from '../../Game.js';
+import { gameConfig } from '../../ConfigManager.js';
 
 export class Sniper extends BaseWeapon {
     constructor(owner) {

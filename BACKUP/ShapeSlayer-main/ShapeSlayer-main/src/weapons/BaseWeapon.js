@@ -1,6 +1,6 @@
-import { Game } from '../engine/Game.js';
+import { Game } from '../Game.js';
 import { Bullet } from './Bullet.js';
-import { gameConfig } from '../characters/ConfigManager.js';
+import { gameConfig } from '../ConfigManager.js';
 
 export class BaseWeapon {
     constructor(owner, type) {

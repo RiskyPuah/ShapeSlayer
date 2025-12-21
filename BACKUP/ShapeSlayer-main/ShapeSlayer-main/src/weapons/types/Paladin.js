@@ -1,7 +1,7 @@
 import { BaseWeapon } from '../BaseWeapon.js';
-import { Game, ctx } from '../../engine/Game.js';
-import { Gem } from '../../entities/Gem.js';
-import { Powerup } from '../../powerups/Powerup.js';
+import { Game, ctx } from '../../Game.js';
+import { Gem } from '../../Gem.js';
+import { Powerup } from '../../Powerup.js';
 
 export class Paladin extends BaseWeapon {
     constructor(owner) {

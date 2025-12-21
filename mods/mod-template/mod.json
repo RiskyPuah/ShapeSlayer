@@ -1,0 +1,31 @@
+{
+  "id": "mod-template",
+  "name": "Mod Template",
+  "version": "1.0.0",
+  "author": "ShapeSlayer Dev Team",
+  "description": "Template for creating new mods",
+  "gameVersion": "1.0.0",
+  "compatibility": {
+    "minGameVersion": "1.0.0",
+    "maxGameVersion": "1.x.x",
+    "requires": [],
+    "conflicts": [],
+    "optional": []
+  },
+  "content": {
+    "characters": [],
+    "weapons": [],
+    "enemies": [],
+    "traits": [],
+    "assets": []
+  },
+  "files": {
+    "main": "mod.js",
+    "config": "config.json"
+  },
+  "permissions": {
+    "modifyGameData": false,
+    "accessFileSystem": false,
+    "networkAccess": false
+  }
+}

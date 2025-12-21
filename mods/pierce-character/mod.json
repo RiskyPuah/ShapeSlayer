@@ -1,0 +1,32 @@
+{
+  "id": "pierce-character",
+  "name": "Pierce Character",
+  "version": "1.0.0",
+  "author": "RiskyPuah",
+  "description": "A tactical sniper character with limited ammo mechanics and ammo pack system",
+  "gameVersion": "1.0.0",
+  "compatibility": {
+    "minGameVersion": "1.0.0",
+    "maxGameVersion": "1.x.x",
+    "requires": [],
+    "conflicts": [],
+    "optional": []
+  },
+  "content": {
+    "characters": ["pierce"],
+    "weapons": ["pierceSniper"],
+    "enemies": [],
+    "traits": [],
+    "assets": []
+  },
+  "files": {
+    "main": "mod.js",
+    "character": "character.json",
+    "weapon": "PierceSniper.js"
+  },
+  "permissions": {
+    "modifyGameData": false,
+    "accessFileSystem": false,
+    "networkAccess": false
+  }
+}

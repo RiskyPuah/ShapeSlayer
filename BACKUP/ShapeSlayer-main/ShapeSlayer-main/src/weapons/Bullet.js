@@ -1,4 +1,4 @@
-import { ctx } from '../engine/Game.js';
+import { ctx } from '../Game.js';
 
 export class Bullet {
     constructor(x, y, vx, vy) {
@@ -41,8 +41,6 @@ export class Bullet {
             case 'paladin': return 0;     // Paladin uses arc attacks, not bullets
             case 'plagueDoctor': return 250; // Medium range for poison potions
             case 'cardThrower': return 350; // Medium-long range for cards
-            case 'pierceSniper': return 99999; // Long range for Pierce sniper
-            case 'ammoPack': return 300; // Medium range for ammo pack projectiles
             default: return 320;          // Default range
         }
     }

@@ -1,0 +1,22 @@
+{
+  "pierce": {
+    "name": "Pierce",
+    "description": "Tactical sniper with limited ammo and supply drop mechanics",
+    "icon": "🎯",
+    "startingWeapon": "pierceSniper",
+    "startingStats": {
+      "health": 75,
+      "speed": 4.3,
+      "xp": 0,
+      "level": 1,
+      "ammo": 4,
+      "maxAmmo": 4
+    },
+    "traits": ["marksman", "tactical"],
+    "colors": {
+      "primary": "#00aaff",
+      "secondary": "#ffffff"
+    },
+    "modId": "pierce-character"
+  }
+}
