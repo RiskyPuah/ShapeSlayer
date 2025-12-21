@@ -1,0 +1,155 @@
+{
+  "traitCategories": {
+    "combat": {
+      "name": "Combat",
+      "description": "Traits that affect damage, defense, and combat abilities",
+      "color": "#ff6666"
+    },
+    "mobility": {
+      "name": "Mobility", 
+      "description": "Traits that affect movement and positioning",
+      "color": "#66ff66"
+    },
+    "utility": {
+      "name": "Utility",
+      "description": "Traits that provide convenience and resource benefits",
+      "color": "#6666ff"
+    },
+    "special": {
+      "name": "Special",
+      "description": "Unique traits with powerful but specific effects",
+      "color": "#ff66ff"
+    }
+  },
+  "traits": {
+    "berserker": {
+      "name": "🗡️ Berserker",
+      "description": "Increased damage but reduced defense",
+      "category": "combat",
+      "rarity": "common",
+      "effects": {
+        "damageMultiplier": 1.25,
+        "speedReduction": 0.1
+      },
+      "conflicts": ["tank", "pacifist"]
+    },
+    "tank": {
+      "name": "🛡️ Tank",
+      "description": "Reduced damage taken but slower movement",
+      "category": "combat", 
+      "rarity": "common",
+      "effects": {
+        "damageReduction": 0.2,
+        "speedReduction": 0.15
+      },
+      "conflicts": ["berserker", "speedDemon"]
+    },
+    "marksman": {
+      "name": "🎯 Marksman",
+      "description": "Improved accuracy and range for ranged weapons",
+      "category": "combat",
+      "rarity": "uncommon",
+      "effects": {
+        "accuracyBonus": 0.3,
+        "rangeMultiplier": 1.2
+      },
+      "applicableWeapons": ["pistol", "sniper", "minigun"]
+    },
+    "speedDemon": {
+      "name": "💨 Speed Demon", 
+      "description": "Significantly faster movement speed",
+      "category": "mobility",
+      "rarity": "common",
+      "effects": {
+        "speedMultiplier": 1.4
+      },
+      "conflicts": ["tank"]
+    },
+    "dodge": {
+      "name": "🌪️ Evasive",
+      "description": "Chance to completely avoid enemy attacks",
+      "category": "mobility",
+      "rarity": "rare",
+      "effects": {
+        "dodgeChance": 0.15
+      }
+    },
+    "scholar": {
+      "name": "📚 Scholar",
+      "description": "Significantly increased XP gain",
+      "category": "utility",
+      "rarity": "common",
+      "effects": {
+        "xpMultiplier": 1.5
+      }
+    },
+    "magnet": {
+      "name": "🧲 Magnetic",
+      "description": "Massively increased gem collection range",
+      "category": "utility",
+      "rarity": "uncommon",
+      "effects": {
+        "gemRangeMultiplier": 2.0
+      }
+    },
+    "lucky": {
+      "name": "🍀 Lucky",
+      "description": "Increased drop rates and rare upgrade chances",
+      "category": "utility",
+      "rarity": "rare",
+      "effects": {
+        "dropRateMultiplier": 1.5,
+        "upgradeRerollBonus": 1
+      }
+    },
+    "vampire": {
+      "name": "🧛 Vampiric",
+      "description": "Heal when dealing damage",
+      "category": "special",
+      "rarity": "rare",
+      "effects": {
+        "lifeSteal": 0.1
+      }
+    },
+    "explosive": {
+      "name": "💥 Explosive Expert",
+      "description": "Chance for attacks to create small explosions",
+      "category": "special",
+      "rarity": "epic",
+      "effects": {
+        "explosionChance": 0.2,
+        "explosionRadius": 30
+      }
+    },
+    "timeWarp": {
+      "name": "⏰ Time Warp",
+      "description": "Occasionally slows down time for a brief moment",
+      "category": "special",
+      "rarity": "legendary",
+      "effects": {
+        "timeSlowChance": 0.05,
+        "timeSlowDuration": 180,
+        "timeSlowFactor": 0.3
+      }
+    },
+    "pacifist": {
+      "name": "☮️ Pacifist",
+      "description": "Cannot deal damage but massively increased XP and movement",
+      "category": "special",
+      "rarity": "epic",
+      "effects": {
+        "damageMultiplier": 0,
+        "xpMultiplier": 3.0,
+        "speedMultiplier": 1.8
+      },
+      "conflicts": ["berserker", "vampire", "explosive"]
+    }
+  },
+  "rarityColors": {
+    "common": "#ffffff",
+    "uncommon": "#00ff00", 
+    "rare": "#0088ff",
+    "epic": "#8800ff",
+    "legendary": "#ff8800"
+  }
+}

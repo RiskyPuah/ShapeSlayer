@@ -1,0 +1,86 @@
+{
+  "gameplay": {
+    "player": {
+      "baseSpeed": 4,
+      "radius": 15,
+      "startingLevel": 1,
+      "startingXP": 0,
+      "baseXPRequired": 10,
+      "xpScalingMultiplier": 1.5
+    },
+    "levelProgression": {
+      "weaponUpgradeInterval": 2,
+      "orbitalUnlockLevel": 5,
+      "maxRerollsPerUpgrade": 2
+    },
+    "combat": {
+      "invincibilityFrames": 60,
+      "holyShieldBaseCooldown": 7200,
+      "baseGemAbsorptionRange": 100,
+      "baseXpMultiplier": 1.0
+    }
+  },
+  "ui": {
+    "colors": {
+      "player": "#00ccff",
+      "xpBar": "#00ff00",
+      "xpBarBackground": "#004400",
+      "holyShieldBar": "#ffaa00",
+      "holyShieldBackground": "#333333"
+    },
+    "bars": {
+      "xpBarWidth": 300,
+      "xpBarHeight": 20,
+      "holyShieldBarWidth": 200,
+      "holyShieldBarHeight": 15
+    }
+  },
+  "spawning": {
+    "enemy": {
+      "baseSpawnRate": 60,
+      "powerupDropChance": 0.1,
+      "explosionPowerupChance": 0.1
+    },
+    "edges": [
+      "top",
+      "right", 
+      "bottom",
+      "left"
+    ]
+  },
+  "projectiles": {
+    "bullet": {
+      "baseSpeed": 15,
+      "baseRadius": 5,
+      "color": "#ffff00"
+    },
+    "rocket": {
+      "baseSpeed": 15,
+      "baseRadius": 8,
+      "color": "#ff8800",
+      "explosionRadius": 60
+    },
+    "piercing": {
+      "baseSpeed": 20,
+      "baseRadius": 2,
+      "color": "#0088ff"
+    }
+  },
+  "effects": {
+    "explosion": {
+      "lifetime": 30,
+      "colors": {
+        "outer": "#ffffff",
+        "middle": "#ff8800", 
+        "core": "#ffff00"
+      }
+    },
+    "arc": {
+      "effectDuration": 10,
+      "colors": {
+        "primary": "#ffdd00",
+        "secondary": "#ffffff"
+      }
+    }
+  }
+}

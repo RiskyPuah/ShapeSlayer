@@ -1,0 +1,135 @@
+{
+  "universalUpgrades": {
+    "damage": {
+      "id": "damage",
+      "name": "💥 More Damage",
+      "description": "Increase attack damage",
+      "color": "#ff6666",
+      "applicableWeapons": ["all"]
+    },
+    "fireRate": {
+      "id": "fireRate",
+      "name": "⚡ Faster Attack Rate",
+      "description": "Attack more frequently",
+      "details": "Reduced time between attacks",
+      "color": "#66ff66",
+      "applicableWeapons": ["all"]
+    },
+    "xpGain": {
+      "id": "xpGain",
+      "name": "📈 XP Boost",
+      "description": "Gain more experience",
+      "details": "+25% XP from all sources",
+      "color": "#9966ff",
+      "effect": {
+        "type": "multiplier",
+        "value": 1.25
+      },
+      "applicableWeapons": ["all"]
+    },
+    "gemRange": {
+      "id": "gemRange",
+      "name": "🧲 Gem Magnet",
+      "description": "Increased gem collection range",
+      "details": "+30 range for automatic gem pickup",
+      "color": "#66ffff",
+      "effect": {
+        "type": "additive",
+        "value": 30
+      },
+      "applicableWeapons": ["all"]
+    },
+    "holyShieldCooldown": {
+      "id": "holyShieldCooldown",
+      "name": "🛡️ Shield Recharge",
+      "description": "Faster Holy Shield recharge",
+      "details": "Reduce shield cooldown by 15%",
+      "color": "#ffaa00",
+      "effect": {
+        "type": "multiplier", 
+        "value": 0.85
+      },
+      "applicableWeapons": ["paladin"]
+    }
+  },
+  "weaponSpecificUpgrades": {
+    "paladin": {
+      "arcRange": {
+        "id": "arcRange",
+        "name": "📏 Arc Range",
+        "description": "Increase arc attack range",
+        "details": "+20 range to arc attacks",
+        "color": "#ffdd88",
+        "effect": {
+          "type": "additive",
+          "value": 20
+        }
+      },
+      "arcAngle": {
+        "id": "arcAngle",
+        "name": "🌀 Arc Angle",
+        "description": "Wider arc attack coverage",
+        "details": "+30 degrees to arc angle",
+        "color": "#ddff88",
+        "effect": {
+          "type": "additive",
+          "value": 0.524
+        }
+      },
+      "smite": {
+        "id": "smite",
+        "name": "⚡ Divine Smite",
+        "description": "Enhanced arc damage",
+        "details": "Unlock/increase smite damage",
+        "color": "#ffffaa",
+        "effect": {
+          "type": "special",
+          "value": "smite"
+        }
+      }
+    },
+    "sniper": {
+      "pierceCount": {
+        "id": "pierceCount",
+        "name": "🎯 Pierce Power",
+        "description": "Bullets pierce more enemies",
+        "details": "+1 enemy pierced per shot",
+        "color": "#88ddff",
+        "effect": {
+          "type": "additive",
+          "value": 1
+        }
+      }
+    },
+    "projectile": {
+      "projectileCount": {
+        "id": "projectileCount",
+        "name": "🔥 Multi Shot",
+        "description": "Fire additional projectiles",
+        "details": "+1 projectile per shot",
+        "color": "#ff88dd",
+        "effect": {
+          "type": "additive",
+          "value": 1
+        }
+      },
+      "accuracy": {
+        "id": "accuracy",
+        "name": "🎯 Accuracy",
+        "description": "Reduced bullet spread",
+        "details": "Tighter shooting pattern",
+        "color": "#88ff88",
+        "effect": {
+          "type": "multiplier",
+          "value": 0.8
+        }
+      }
+    }
+  },
+  "upgradeCategories": {
+    "universal": ["damage", "fireRate", "xpGain", "gemRange"],
+    "paladin": ["arcRange", "arcAngle", "smite", "holyShieldCooldown"],
+    "sniper": ["pierceCount"],
+    "projectileWeapons": ["projectileCount", "accuracy"]
+  }
+}

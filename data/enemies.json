@@ -1,0 +1,67 @@
+{
+  "enemyTypes": {
+    "normal": {
+      "name": "Small Enemy",
+      "stats": {
+        "size": 20,
+        "maxHealth": 2,
+        "baseSpeed": 1,
+        "speedLevelMultiplier": 0.15,
+        "xpValue": 1
+      },
+      "visuals": {
+        "color": "#ff4444",
+        "shape": "square"
+      },
+      "spawning": {
+        "probability": 0.7,
+        "weight": 70
+      }
+    },
+    "medium": {
+      "name": "Medium Enemy", 
+      "stats": {
+        "size": 35,
+        "maxHealth": 5,
+        "baseSpeed": 1,
+        "speedLevelMultiplier": 0.15,
+        "xpValue": 3
+      },
+      "visuals": {
+        "color": "#ff8800",
+        "shape": "square"
+      },
+      "spawning": {
+        "probability": 0.3,
+        "weight": 30
+      }
+    },
+    "shielded": {
+      "name": "Shielded Enemy",
+      "description": "Protected by energy shields that block attacks",
+      "stats": {
+        "size": 20,
+        "maxHealth": 2,
+        "baseSpeed": 0.8,
+        "speedLevelMultiplier": 0.06,
+        "xpValue": 3
+      },
+      "visuals": {
+        "color": "#4488ff",
+        "shape": "square"
+      },
+      "spawning": {
+        "probability": 0.15,
+        "weight": 15
+      }
+    }
+  },
+  "spawnSettings": {
+    "enemySpawnRate": 60,
+    "difficultyScaling": {
+      "healthMultiplier": 1.1,
+      "speedMultiplier": 1.05,
+      "spawnRateIncrease": 0.02
+    }
+  }
+}
