@@ -2,13 +2,7 @@
 
 A fast-paced, top-down survival game featuring diverse weapon systems, dynamic enemies, and strategic character progression. Fight waves of geometric enemies using unique weapons with special abilities and build your perfect character loadout.
 
-## 📜 License
-
-This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.
-- ✅ Free to use, modify, and distribute
-- ✅ Commercial use allowed
-- ✅ Must provide attribution
-- ✅ Modified versions must also be open source
+📜 License This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 🎮 Game Overview
 
