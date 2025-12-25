@@ -38,7 +38,7 @@ ShapeSlayer is a bullet-hell style survival game where you:
 - Saves complete game state to localStorage
 
 ### **Manual Save**
-- Press **'S' key** during gameplay to save instantly
+- Press **'F5' key** during gameplay to save instantly
 - Perfect for quick saves before risky situations
 - Immediate feedback with notification
 
@@ -87,7 +87,7 @@ The game starts with a professional main menu featuring:
 - **SPACEBAR**: Toggle between Auto-Aim 🤖 and Manual Aim 🎯
 
 ### **Keyboard Shortcuts**
-- **'S' Key**: Save game instantly
+- **'F5' Key**: Save game instantly
 - **'M' Key**: Open mod manager
 - **'R' Key**: Manual reload (Pierce Sniper only)
 - **ESC Key**: Close mod manager / Return to main menu

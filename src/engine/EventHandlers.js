@@ -62,8 +62,8 @@ export class EventHandlers {
                 return;
             }
             
-            // Manual save with 'S' key (during active game)
-            if (event.key.toLowerCase() === 's' && Game.active && Game.player && !Game.player.isDead) {
+            // Manual save with F5 key (during active game)
+            if (event.key === 'F5' && Game.active && Game.player && !Game.player.isDead) {
                 saveManager.saveGame(Game);
                 saveManager.showSaveNotification();
                 event.preventDefault();

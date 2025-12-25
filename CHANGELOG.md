@@ -4,6 +4,28 @@ All notable changes to ShapeSlayer will be documented in this file.
 
 ---
 
+## Version 1.4.0.1 - "Control Conflict Hotfix" *(December 25, 2025)*
+
+### 🐛 **Critical Bug Fixes**
+- **Save Key Conflict**: Changed manual save from 'S' key to **F5** key
+  - 'S' key conflicted with WASD movement (move down)
+  - Was causing game to save every time player moved down
+  - F5 is now the dedicated save key
+- **Save System**: Fixed player level/xp not saving correctly
+  - Changed `game.level` → `game.player.level`
+  - Changed `game.xp` → `game.player.xp`
+  - Level now properly saves and loads
+- **Auto-aim Indicator**: Hidden in manual aim mode to prevent confusion
+  - Only shows targeting reticle in auto-aim mode
+  - Manual mode shows only crosshair
+
+### ⌨️ **Updated Controls**
+- **F5**: Manual save (NEW - changed from 'S')
+- **SPACEBAR**: Toggle aiming mode
+- **WASD**: Movement (no longer conflicts with save)
+
+---
+
 ## Version 1.4.0 - "The Mouse Appointed" *(December 25, 2025)*
 
 ### 🎯 **Major Feature: Dual Aiming System**
