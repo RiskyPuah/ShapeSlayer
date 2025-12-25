@@ -1,6 +1,7 @@
 import { Game, ctx, canvas } from '../engine/Game.js';
 import { WeaponFactory } from '../weapons/WeaponFactory.js';
 import { HealthManager } from './HealthManager.js';
+import { aimingSystem } from '../engine/AimingSystem.js';
 
 export class Player {
     constructor(x, y, startingHealth = 100) {
@@ -149,7 +150,9 @@ gainXp(amount) {
     }
     
     drawAimingIndicator() {
+        // Only show auto-aim indicator in auto mode
         if (!this.weapon || !Game.enemies || Game.enemies.length === 0) return;
+        if (aimingSystem.isManualMode()) return; // Hide in manual aim mode
         
         // Get the target the weapon is aiming at
         const target = this.weapon.getNearestEnemy();
