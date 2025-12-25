@@ -14,6 +14,7 @@ import { modManager } from '../mods-system/ModManager.js';
 import { modManagerScreen } from '../mods-system/ModManagerScreen.js';
 import { mainMenuScreen } from './MainMenuScreen.js';
 import { saveManager } from './SaveManager.js';
+import { aimingSystem } from './AimingSystem.js';
 
 console.log("🎮 ShapeSlayer Game Loading...");
 
@@ -34,6 +35,7 @@ window.modManager = modManager;
 window.modManagerScreen = modManagerScreen;
 window.mainMenuScreen = mainMenuScreen;
 window.saveManager = saveManager;
+window.aimingSystem = aimingSystem;
 
 // Expose character screen functions for HTML onclick handlers
 window.showCharacterTab = (tab) => characterSelectionScreen.showCharacterTab(tab);
@@ -45,6 +47,9 @@ window.cancelCharacterCreation = () => characterSelectionScreen.cancelCreation()
 // Start the game loop (paused until player selects character)
 Game.active = false;
 gameLoop.start();
+
+// Initialize aiming system UI
+aimingSystem.initialize();
 
 // Show main menu on startup
 setTimeout(() => {

@@ -9,6 +9,7 @@ import { Orbital } from '../projectiles/Orbital.js';
 import { modManagerScreen } from '../mods-system/ModManagerScreen.js';
 import { SelectionScreen, selectionScreen } from '../characters/SelectionScreen.js';
 import { saveManager } from './SaveManager.js';
+import { aimingSystem } from './AimingSystem.js';
 
 export class EventHandlers {
     constructor() {
@@ -65,6 +66,13 @@ export class EventHandlers {
             if (event.key.toLowerCase() === 's' && Game.active && Game.player && !Game.player.isDead) {
                 saveManager.saveGame(Game);
                 saveManager.showSaveNotification();
+                event.preventDefault();
+                return;
+            }
+            
+            // Toggle aiming mode with SPACE key (during active game)
+            if (event.key === ' ' && Game.active && Game.player) {
+                aimingSystem.toggle();
                 event.preventDefault();
                 return;
             }

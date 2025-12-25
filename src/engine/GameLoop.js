@@ -12,6 +12,7 @@ import { Explosion } from '../projectiles/Explosion.js';
 import { PoisonPuddle } from '../projectiles/PoisonPuddle.js';
 import { gameConfig } from '../characters/ConfigManager.js';
 import { modManagerScreen } from '../mods-system/ModManagerScreen.js';
+import { aimingSystem } from './AimingSystem.js';
 
 export class GameLoop {
     constructor() {
@@ -381,6 +382,9 @@ export class GameLoop {
         if (Game.ammoPacks) {
             Game.ammoPacks.forEach(ammoPack => ammoPack.draw());
         }
+
+        // Draw aiming indicator (crosshair in manual mode)
+        aimingSystem.drawAimIndicator(ctx);
 
         modManagerScreen.draw();
     }

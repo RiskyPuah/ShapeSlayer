@@ -79,7 +79,12 @@ The game starts with a professional main menu featuring:
 ## ⌨️ Controls
 
 ### **Movement**
-- Mouse cursor to move player (follows mouse position)
+- **WASD** or **Arrow Keys**: Move player
+
+### **Aiming & Combat** *(v1.4.0)*
+- **Auto-Aim Mode** (Default): Weapons automatically target nearest enemy
+- **Manual Aim Mode**: Aim with mouse cursor
+- **SPACEBAR**: Toggle between Auto-Aim 🤖 and Manual Aim 🎯
 
 ### **Keyboard Shortcuts**
 - **'S' Key**: Save game instantly
@@ -417,7 +422,14 @@ All game balance is controlled via JSON files in `/data/`:
 
 ## 🎉 Recent Updates
 
-### 💾 **Version 1.3.0 - "The Professional Update"** *(Latest - December 25, 2025)*
+### 🎯 **Version 1.4.0 - "The Mouse Appointed"** *(Latest - December 25, 2025)*
+- **Dual Aiming System**: Toggle between Auto-Aim and Manual mouse aiming
+- **SPACEBAR Toggle**: Instantly switch aiming modes during gameplay
+- **Visual Feedback**: Crosshair indicator in manual mode, mode status UI
+- **Player Choice**: Two distinct playstyles - automated or skill-based
+- **Full Integration**: Works with all weapons automatically
+
+### 💾 **Version 1.3.0 - "The Professional Update"** *(December 25, 2025)*
 - **Main Menu System**: Professional SHAPESLAYER™ splash screen with menu navigation
 - **Save System**: Auto-save (30s), manual save (S key), Continue feature
 - **UI Improvements**: Restored game UI visibility, proper menu transitions

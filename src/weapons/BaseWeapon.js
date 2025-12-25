@@ -1,6 +1,7 @@
 import { Game } from '../engine/Game.js';
 import { Bullet } from './Bullet.js';
 import { gameConfig } from '../characters/ConfigManager.js';
+import { aimingSystem } from '../engine/AimingSystem.js';
 
 export class BaseWeapon {
     constructor(owner, type) {
@@ -318,8 +319,8 @@ export class BaseWeapon {
     }
     
     update() {
-        // Auto-fire at nearest enemy
-        const target = this.getNearestEnemy();
+        // Get aiming target based on current mode (auto or manual)
+        const target = aimingSystem.getAimTarget(this.owner, () => this.getNearestEnemy());
         if (target) {
             this.shoot(target.x, target.y);
         }

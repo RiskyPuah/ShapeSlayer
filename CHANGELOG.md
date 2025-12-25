@@ -4,6 +4,97 @@ All notable changes to ShapeSlayer will be documented in this file.
 
 ---
 
+## Version 1.4.0 - "The Mouse Appointed" *(December 25, 2025)*
+
+### 🎯 **Major Feature: Dual Aiming System**
+
+**NEW: Manual Mouse Aiming Mode**
+- Added complete manual mouse aiming system
+- Players can now choose between **Auto-Aim** (default) and **Manual Aim**
+- Press **SPACEBAR** to toggle between modes instantly
+- Full mouse tracking for precise aiming control
+
+**AimingSystem Class** (`src/engine/AimingSystem.js`)
+- Singleton aiming manager with dual mode support
+- Real-time mouse position tracking
+- Smooth mode switching with visual feedback
+- Integration with all weapon types
+
+### 🎨 **Visual Feedback**
+
+**Crosshair Indicator** (Manual Mode Only)
+- Orange crosshair appears at mouse cursor
+- Professional gaming crosshair design (lines + circle)
+- Only visible when in manual mode
+- Disappears when mouse leaves canvas
+
+**Mode Toggle Notification**
+- Large animated popup when switching modes
+- Shows current mode: 🤖 AUTO AIM or 🎯 MANUAL AIM
+- Color-coded (green for auto, orange for manual)
+- Fade in/out animation (1.5s)
+
+**Persistent Mode Indicator**
+- Top-left UI indicator shows current mode
+- Updates color and icon based on mode
+- Always visible during gameplay
+- Smooth transitions between states
+
+### ⌨️ **Controls Update**
+
+**SPACEBAR**: Toggle between Auto-Aim and Manual Aim
+- Works during active gameplay
+- Instant mode switching
+- Visual and console feedback
+- No interruption to combat
+
+**Auto-Aim Mode** (Default - 🤖)
+- Automatically targets nearest enemy
+- Traditional ShapeSlayer experience
+- Best for beginners and casual play
+
+**Manual Aim Mode** (🎯)
+- Aim with mouse cursor position
+- Precise control over shot direction
+- Strategic gameplay option
+- Skill-based aiming
+
+### 🔧 **Technical Implementation**
+
+**BaseWeapon Integration**
+- Modified `update()` method to use `aimingSystem.getAimTarget()`
+- Seamless mode switching without weapon-specific changes
+- All weapons support both modes automatically
+
+**Event Handler Updates**
+- Added spacebar listener for mode toggle
+- Prevents conflicts with other controls
+- Active only during gameplay
+
+**Game Loop Integration**
+- Draws crosshair indicator in manual mode
+- Renders after all game objects
+- No performance impact
+
+### 🎮 **Benefits**
+
+**Player Choice**
+- Two distinct playstyles in one game
+- Switch on-the-fly based on situation
+- Accessibility for different skill levels
+
+**Tactical Gameplay**
+- Manual aim allows for strategic positioning
+- Can aim away from nearest enemy
+- Better control in crowded situations
+
+**Improved Experience**
+- More engaging combat
+- Skill expression for advanced players
+- Quality-of-life for all players
+
+---
+
 ## Version 1.3.0.2 - "Pierce Character Fixes" *(December 25, 2025)*
 
 ### 🐛 **Bug Fixes**
