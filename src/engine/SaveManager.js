@@ -65,10 +65,10 @@ export class SaveManager {
                 
                 // Game progress
                 progress: {
-                    level: game.level,
-                    xp: game.xp,
-                    xpThreshold: game.xpThreshold,
-                    score: game.score,
+                    level: game.player.level || 1,
+                    xp: game.player.xp || 0,
+                    xpToNext: game.player.xpToNext || 10,
+                    score: game.score || 0,
                     kills: game.kills || 0
                 },
                 
@@ -193,14 +193,18 @@ export class SaveManager {
     startAutoSave(game) {
         this.stopAutoSave(); // Clear existing timer
         
+        console.log(`🔄 Starting auto-save (interval: ${this.autoSaveInterval}ms = ${this.autoSaveInterval/1000}s)`);
+        
         this.autoSaveTimer = setInterval(() => {
-            if (game && game.active && !game.player.isDead) {
+            if (game && game.active && game.player && !game.player.isDead) {
+                const timeSinceLastSave = Date.now() - this.lastSaveTime;
+                console.log(`⏰ Auto-save triggered (${Math.floor(timeSinceLastSave/1000)}s since last save)`);
                 this.saveGame(game);
                 this.showSaveNotification();
             }
         }, this.autoSaveInterval);
 
-        console.log('🔄 Auto-save enabled (every 30s)');
+        console.log('✅ Auto-save timer started');
     }
 
     /**

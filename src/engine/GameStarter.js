@@ -160,15 +160,15 @@ export class GameStarter {
             // Restore character
             this.selectedCharacter = saveData.character;
 
-            // Restore game progress
-            Game.level = saveData.progress.level;
-            Game.xp = saveData.progress.xp;
-            Game.xpThreshold = saveData.progress.xpThreshold;
+            // Restore game progress to player
+            Game.player.level = saveData.progress.level;
+            Game.player.xp = saveData.progress.xp;
+            Game.player.xpToNext = saveData.progress.xpToNext || saveData.progress.xpThreshold || 10;
             Game.score = saveData.progress.score;
             Game.kills = saveData.progress.kills || 0;
 
             // Update UI
-            document.getElementById('lvl').textContent = Game.level;
+            document.getElementById('lvl').textContent = Game.player.level;
             document.getElementById('score').textContent = Game.score;
 
             // Hide menus and start game
