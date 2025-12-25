@@ -149,7 +149,7 @@ export class CharacterManager {
             icon: characterData.icon || '🧑',
             startingWeapon: characterData.startingWeapon || 'pistol',
             startingStats: {
-                health: characterData.startingStats?.health || 100,
+                health: characterData.startingStats?.health || 4, // Default 4 HP = 2 hearts
                 speed: characterData.startingStats?.speed || 4,
                 xp: 0,
                 level: 1
@@ -259,10 +259,51 @@ export class CharacterManager {
             if (saved) {
                 this.customCharacters = JSON.parse(saved);
                 console.log(`Loaded ${Object.keys(this.customCharacters).length} custom characters`);
+                
+                // Migrate old health values to new hearts system (one-time migration)
+                this.migrateCustomCharacterHealth();
             }
         } catch (error) {
             console.warn('Failed to load custom characters:', error);
             this.customCharacters = {};
+        }
+    }
+
+    /**
+     * Migrate old custom character health values (70-100) to new hearts system (4-10)
+     * This is a one-time migration for backwards compatibility
+     */
+    migrateCustomCharacterHealth() {
+        let migratedCount = 0;
+        
+        for (const [id, character] of Object.entries(this.customCharacters)) {
+            const health = character.startingStats?.health;
+            
+            // If health > 10, it's using the old system and needs migration
+            if (health && health > 10) {
+                let newHealth;
+                
+                // Convert old health values to new hearts-based system
+                if (health <= 75) {
+                    newHealth = 4;  // 2 hearts - Glass Cannon
+                } else if (health <= 85) {
+                    newHealth = 6;  // 3 hearts - Balanced
+                } else if (health <= 100) {
+                    newHealth = 8;  // 4 hearts - Tank
+                } else {
+                    newHealth = 10; // 5 hearts - Super Tank
+                }
+                
+                console.log(`🔄 Migrating ${character.name}: ${health} HP → ${newHealth} HP (${newHealth/2} hearts)`);
+                character.startingStats.health = newHealth;
+                migratedCount++;
+            }
+        }
+        
+        // Save migrated data back to localStorage if any changes were made
+        if (migratedCount > 0) {
+            this.saveCustomCharacters();
+            console.log(`✅ Migrated ${migratedCount} custom character(s) to hearts system`);
         }
     }
 

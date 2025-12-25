@@ -30,9 +30,12 @@ export class GameStarter {
         this.selectedCharacter = character;
         
         try {
+            // Get starting health from character (default to 2 hearts = 4 HP)
+            const startingHealth = character?.startingStats?.health || 4;
+            
             // Create player
             console.log("Creating player...");
-            Game.player = new Player(canvas.width / 2, canvas.height / 2);
+            Game.player = new Player(canvas.width / 2, canvas.height / 2, startingHealth);
             console.log("✅ Player created");
             
             // Create weapon

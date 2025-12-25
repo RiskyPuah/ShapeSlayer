@@ -1,8 +1,9 @@
 import { Game, ctx, canvas } from '../engine/Game.js';
 import { WeaponFactory } from '../weapons/WeaponFactory.js';
+import { HealthManager } from './HealthManager.js';
 
 export class Player {
-    constructor(x, y) {
+    constructor(x, y, startingHealth = 100) {
         this.x = x;
         this.y = y;
         this.radius = 15;
@@ -14,8 +15,12 @@ export class Player {
         this.xp = 0;
         this.xpToNext = 10;
         
+        // Health system
+        this.healthManager = new HealthManager(startingHealth);
+        
         // Systems
         this.weapon = null; // Will be set from main.js after weapon selection
+        this.shield = null; // Holy Shield system (set by weapon)
         this.orbitals = []; // Stores the swords/shields
         this.sprite = null; // Stores the custom image
 
@@ -43,12 +48,20 @@ export class Player {
         this.x = Math.max(this.radius, Math.min(canvas.width - this.radius, this.x));
         this.y = Math.max(this.radius, Math.min(canvas.height - this.radius, this.y));
 
-        // 3. Update Weapons
+        // 3. Update Health Manager
+        this.healthManager.update();
+
+        // 4. Update Shield
+        if (this.shield) {
+            this.shield.update();
+        }
+
+        // 5. Update Weapons
         if (this.weapon) {
             this.weapon.update();
         }
         
-        // 4. Update Orbitals (Spinning swords/shields)
+        // 6. Update Orbitals (Spinning swords/shields)
         this.orbitals.forEach(orb => orb.update());
     }
 
@@ -98,48 +111,40 @@ gainXp(amount) {
     }
 
     draw() {
+        // 1. Draw Health Hearts (top left corner)
+        this.healthManager.drawHearts(20, 60);
+        
         // Skip drawing every few frames if invincible (blinking effect)
-        if (this.isInvincible && Math.floor(Game.frameCount / 5) % 2 === 0) {
+        if (this.healthManager.shouldFlash()) {
             // Draw orbitals even when player is blinking
             this.orbitals.forEach(orb => orb.draw());
-            return;
+            if (Math.floor(Game.frameCount / 5) % 2 === 0) {
+                return;
+            }
         }
         
-        // 1. Draw Weapon Aiming Indicator (before player so it's behind)
+        // 2. Draw Weapon Aiming Indicator (before player so it's behind)
         this.drawAimingIndicator();
         
-        // 2. Draw Player (Image or Circle)
+        // 3. Draw Player (Image or Circle)
         if (this.sprite) {
             ctx.drawImage(this.sprite, this.x - this.radius*1.5, this.y - this.radius*1.5, this.radius*3, this.radius*3);
         } else {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            
-            // Holy Shield glow effect
-            if (this.holyShieldGlow) {
-                ctx.fillStyle = '#ffaa00'; // Golden color
-                ctx.shadowBlur = 25;
-                ctx.shadowColor = '#ffaa00';
-            } else {
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = this.color;
-            }
-            
+            ctx.fillStyle = this.color;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = this.color;
             ctx.fill();
             ctx.shadowBlur = 0;
-            
-            // Draw shield indicator if active
-            if (this.holyShieldGlow) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius + 5, 0, Math.PI * 2);
-                ctx.strokeStyle = '#ffaa00';
-                ctx.lineWidth = 3;
-                ctx.stroke();
-            }
         }
 
-        // 3. Draw Orbitals
+        // 4. Draw Shield Icon (above player)
+        if (this.shield) {
+            this.shield.draw();
+        }
+
+        // 5. Draw Orbitals
         this.orbitals.forEach(orb => orb.draw());
     }
     

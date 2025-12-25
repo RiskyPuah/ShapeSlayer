@@ -104,6 +104,18 @@ export class Enemy {
     update() {
         if (!Game.player) return;
 
+        // Handle float-away animation (from InstantDeath powerup)
+        if (this.floatAway) {
+            this.floatTimer++;
+            this.y -= 2; // Float upward
+            this.floatOpacity = 1 - (this.floatTimer / this.floatDuration);
+            
+            if (this.floatTimer >= this.floatDuration) {
+                this.dead = true; // Mark for removal
+            }
+            return; // Don't do normal movement
+        }
+
         // Move toward player
         const angle = Math.atan2(Game.player.y - this.y, Game.player.x - this.x);
         this.x += Math.cos(angle) * this.speed;
@@ -191,6 +203,11 @@ export class Enemy {
     }
 
     draw() {
+        // Apply opacity for float-away animation
+        if (this.floatAway && this.floatOpacity !== undefined) {
+            ctx.globalAlpha = this.floatOpacity;
+        }
+        
         // Draw enemy body
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x - this.size/2, this.y - this.size/2, this.size, this.size);
@@ -223,6 +240,11 @@ export class Enemy {
                 ctx.arc(particleX, particleY, Math.random() * 2 + 1, 0, Math.PI * 2);
                 ctx.fill();
             }
+        }
+        
+        // Reset opacity
+        if (this.floatAway && this.floatOpacity !== undefined) {
+            ctx.globalAlpha = 1;
         }
         
         // Draw health bar if damaged

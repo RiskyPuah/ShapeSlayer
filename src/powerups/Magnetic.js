@@ -1,16 +1,15 @@
 import { Game, ctx } from '../engine/Game.js';
 
 /**
- * Powerup Base Class
- * Handles basic powerup spawning and collection mechanics
- * Subclasses extend this for specific powerup types
+ * Magnetic - Powerup that attracts gems
+ * When collected, all gems become magnetized and auto-collect
  */
-export class Powerup {
+export class Magnetic {
     constructor(x, y) {
         this.x = x;
         this.y = y;
         this.size = 15; 
-        this.color = '#aa00aa'; // Purple (default)
+        this.color = '#aa00aa'; // Purple
         this.collected = false;
         
         // Bobbing animation effect
@@ -28,24 +27,27 @@ export class Powerup {
         // 2. Collision with Player
         const dist = Math.hypot(Game.player.x - this.x, Game.player.y - this.y);
         if (dist < Game.player.radius + this.size) {
-            this.onCollected(Game.player);
+            this.activateMagnet();
             this.collected = true;
         }
     }
 
     /**
-     * Called when powerup is collected
-     * Override in subclasses for specific behavior
+     * Activate magnet effect - magnetize all gems
      */
-    onCollected(player) {
-        console.log("📦 Powerup collected!");
+    activateMagnet() {
+        Game.gems.forEach(gem => {
+            gem.magnetized = true; 
+            gem.speed = 12;
+        });
+        console.log("🧲 MAGNET ACTIVATED!");
     }
 
     draw() {
         ctx.save();
         ctx.translate(this.x, this.y);
         
-        // Draw Square
+        // Draw Purple Square
         ctx.fillStyle = this.color;
         ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
         

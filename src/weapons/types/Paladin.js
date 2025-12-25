@@ -1,7 +1,8 @@
 import { BaseWeapon } from '../BaseWeapon.js';
 import { Game, ctx } from '../../engine/Game.js';
 import { Gem } from '../../entities/Gem.js';
-import { Powerup } from '../../powerups/Powerup.js';
+import { PowerupFactory } from '../../powerups/PowerupFactory2.js';
+import { PaladinShield } from '../../shields/PaladinShield.js';
 
 export class Paladin extends BaseWeapon {
     constructor(owner) {
@@ -9,6 +10,11 @@ export class Paladin extends BaseWeapon {
         
         // Visual effect properties
         this.arcEffect = null; // Will store arc effect data
+        
+        // Give player a Paladin Shield
+        if (this.owner) {
+            this.owner.shield = new PaladinShield(this.owner, 7200); // 2 minute recharge
+        }
     }
     
     initializeWeapon() {
@@ -19,10 +25,7 @@ export class Paladin extends BaseWeapon {
         this.projectileType = 'arc';
         this.speedModifier = 0.9; // 10% slower (armored)
         this.arcRange = 100;     // Range of the arc attack
-        this.arcAngle = Math.PI / 3; // 60-degree arc
-        
-        // Paladin starts with Holy Shield active!
-        this.activateHolyShield();
+        this.arcAngle = Math.PI / 2; // 90-degree arc
     }
     
     // Override damage upgrade for paladins
@@ -74,8 +77,12 @@ export class Paladin extends BaseWeapon {
     }
     
     applyHolyShieldCooldownUpgrade() {
-        this.holyShieldMaxCooldown = Math.max(this.holyShieldMaxCooldown * 0.85, 60 * 30); // Reduce by 15%, min 30 seconds
-        console.log(`${this.type} Holy Shield cooldown reduced to ${(this.holyShieldMaxCooldown / 60).toFixed(1)} seconds`);
+        // Upgrade the shield directly
+        if (this.owner && this.owner.shield && this.owner.shield.reduceRechargeCooldown) {
+            this.owner.shield.reduceRechargeCooldown(0.85);
+        } else {
+            console.log("No shield to upgrade!");
+        }
     }
     
     // Override to use arc attack instead of projectiles
@@ -83,12 +90,77 @@ export class Paladin extends BaseWeapon {
         this.performArcAttack(mouseX, mouseY);
     }
     
+    /**
+     * Smart targeting for Paladin - finds the best angle to hit the most enemies
+     */
+    findBestArcTarget() {
+        if (!this.owner || !Game.enemies || Game.enemies.length === 0) return null;
+        
+        let bestTarget = null;
+        let bestScore = -1;
+        
+        // Test each enemy as a potential target
+        Game.enemies.forEach(enemy => {
+            const distToEnemy = Math.hypot(enemy.x - this.owner.x, enemy.y - this.owner.y);
+            
+            // Skip if out of range
+            if (distToEnemy > this.arcRange) return;
+            
+            // Calculate angle to this enemy
+            const angleToEnemy = Math.atan2(enemy.y - this.owner.y, enemy.x - this.owner.x);
+            
+            // Count how many enemies would be hit if we aimed at this angle
+            let hitCount = 0;
+            let totalHealth = 0;
+            
+            Game.enemies.forEach(otherEnemy => {
+                const distToOther = Math.hypot(otherEnemy.x - this.owner.x, otherEnemy.y - this.owner.y);
+                if (distToOther > this.arcRange) return;
+                
+                const angleToOther = Math.atan2(otherEnemy.y - this.owner.y, otherEnemy.x - this.owner.x);
+                let angleDiff = angleToOther - angleToEnemy;
+                
+                // Normalize angle difference
+                while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+                while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+                
+                if (Math.abs(angleDiff) <= this.arcAngle / 2) {
+                    hitCount++;
+                    totalHealth += otherEnemy.health || 1;
+                }
+            });
+            
+            // Calculate score: prioritize hit count, then total health, with distance penalty
+            // More enemies hit = better score
+            // Closer targets get slight bonus
+            const distanceFactor = 1 - (distToEnemy / this.arcRange) * 0.3; // 30% bonus for closer targets
+            const score = (hitCount * 100) + (totalHealth * 10) + (distanceFactor * 50);
+            
+            if (score > bestScore) {
+                bestScore = score;
+                bestTarget = {
+                    x: enemy.x,
+                    y: enemy.y,
+                    angle: angleToEnemy,
+                    hitCount: hitCount,
+                    distance: distToEnemy
+                };
+            }
+        });
+        
+        return bestTarget;
+    }
+    
     performArcAttack(mouseX, mouseY) {
         if (!this.owner || !Game.enemies) return;
         
-        const dx = mouseX - this.owner.x;
-        const dy = mouseY - this.owner.y;
-        const targetAngle = Math.atan2(dy, dx);
+        // Use smart targeting to find best arc angle
+        const target = this.findBestArcTarget();
+        if (!target) return; // No enemies in range
+        
+        const targetAngle = target.angle;
+        
+        console.log(`🎯 Paladin targeting cluster: ${target.hitCount} enemies at ${target.distance.toFixed(0)}px`);
         
         // Create visual arc effect
         this.arcEffect = {
@@ -127,7 +199,8 @@ export class Paladin extends BaseWeapon {
                 }
                 
                 // Apply Smite bonus if Holy Shield is active and Smite is learned
-                if (this.smiteEnabled && this.holyShieldActive) {
+                const shieldActive = this.owner?.shield?.hasCharges();
+                if (this.smiteEnabled && shieldActive) {
                     damage *= (this.smiteMultiplier || 1.5);
                     console.log("SMITE activated! Bonus damage applied.");
                 }
@@ -146,9 +219,10 @@ export class Paladin extends BaseWeapon {
                     Game.enemies.splice(index, 1);
                     Game.gems.push(new Gem(enemy.x, enemy.y, enemy.xpValue));
                     
-                    // 10% chance to drop powerup
-                    if (Math.random() < 0.1) {
-                        Game.powerups.push(new Powerup(enemy.x, enemy.y));
+                    // Use PowerupFactory for proper powerup spawning
+                    const powerup = PowerupFactory.spawnPowerup(enemy.x, enemy.y);
+                    if (powerup) {
+                        Game.powerups.push(powerup);
                     }
                     
                     Game.score += 10;

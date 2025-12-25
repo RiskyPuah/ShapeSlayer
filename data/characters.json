@@ -6,7 +6,7 @@
       "icon": "⚔️",
       "startingWeapon": "paladin",
       "startingStats": {
-        "health": 100,
+        "health": 8,
         "speed": 4,
         "xp": 0,
         "level": 1
@@ -23,7 +23,7 @@
       "icon": "🏹",
       "startingWeapon": "sniper",
       "startingStats": {
-        "health": 80,
+        "health": 4,
         "speed": 5,
         "xp": 0,
         "level": 1
@@ -40,7 +40,7 @@
       "icon": "🔫",
       "startingWeapon": "pistol",
       "startingStats": {
-        "health": 90,
+        "health": 6,
         "speed": 4.5,
         "xp": 0,
         "level": 1
@@ -57,7 +57,7 @@
       "icon": "💣",
       "startingWeapon": "rocket",
       "startingStats": {
-        "health": 120,
+        "health": 10,
         "speed": 3.5,
         "xp": 0,
         "level": 1
@@ -74,7 +74,7 @@
       "icon": "📚",
       "startingWeapon": "pistol",
       "startingStats": {
-        "health": 70,
+        "health": 4,
         "speed": 4,
         "xp": 0,
         "level": 1
@@ -91,7 +91,7 @@
       "icon": "🎒",
       "startingWeapon": "shotgun",
       "startingStats": {
-        "health": 85,
+        "health": 6,
         "speed": 4.8,
         "xp": 0,
         "level": 1
@@ -108,7 +108,7 @@
       "icon": "🎭",
       "startingWeapon": "cardThrower",
       "startingStats": {
-        "health": 85,
+        "health": 6,
         "speed": 4.2,
         "xp": 0,
         "level": 1

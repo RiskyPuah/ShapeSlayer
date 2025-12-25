@@ -322,75 +322,26 @@ All game balance is controlled via JSON files in `/data/`:
 
 ## 🎉 Recent Updates
 
-### 🃏 **Card Thrower Weapon** *(Latest)*
-- New piercing projectile system
-- 3-card spread attacks
-- Poison/Fire elemental upgrades
-- Custom card rendering with rotation
-- Card Master character class
+### ❤️ **Version 1.2.5 - "The Heartful Update"** *(Latest - December 25, 2025)*
+- **Health System Overhaul**: Binding of Isaac style hearts (2 HP per heart)
+- **Shield System Rework**: Modular shield classes with visual icons
+- **Smart Paladin Targeting**: AI targets enemy clusters intelligently
+- **Holy Shield Powerup**: Collectible shields for all characters
+- **Character Rebalance**: Health adjusted for new heart system (2-5 hearts)
 
-### 🔥 **Pyromancer Weapon**
-- Arc flamethrower mechanics
-- Burn damage over time
-- Continuous flame rendering
-- Fire particle effects
+### 🏗️ **Version 1.2.0 - "The Great Refactor"** *(December 25, 2025)*
+- **Modular Architecture**: Complete codebase reorganization
+- **Engine Separation**: Split into focused modules (GameLoop, GameStarter, etc.)
+- **Improved Mod System**: Better integration and loading
+- **Bug Fixes**: Fixed mod paths and imports
 
-### 🧪 **Plague Doctor Weapon** 
-- Poison puddle area denial
-- DOT mechanics integration
-- Growing puddle effects
-- Area control gameplay
+### 🃏 **Version 1.1.0 - Card Thrower & Elemental Effects**
+- Card Thrower weapon with piercing mechanics
+- Pyromancer flamethrower weapon
+- Plague Doctor poison puddles
+- Shielded enemy types
 
-### 🛡️ **Shielded Enemies**
-- Shield blocking mechanics
-- Speed boost on shield break
-- Poison bypass system
-- Visual shield indicators
-
-## 📋 Changelog
-
-### Version 1.2.0 *(December 25, 2025)*
-
-#### 🏗️ **Major Refactoring**
-- **Modular Architecture**: Complete codebase reorganization into logical folder structure
-  - `src/engine/` - Core game engine (main, Game, GameInitializer, GameLoop, GameStarter, EventHandlers)
-  - `src/entities/` - Game entities (Player, Enemy, Gem)
-  - `src/projectiles/` - Projectile effects (Explosion, Orbital, PoisonPuddle)
-  - `src/powerups/` - Power-up system
-  - `src/characters/` - Character management system
-  - `src/weapons/` - Weapon system with types
-  - `src/mods-system/` - Mod framework (⚠️ in development)
-
-#### ✨ **Features & Improvements**
-- **Separated HTML/CSS**: External `styles.css` for better maintainability
-- **Modular main.js**: Split 600-line file into 5 focused modules
-  - GameInitializer - Configuration loading
-  - GameLoop - Update/render cycles
-  - GameStarter - Game initialization
-  - EventHandlers - Input handling
-  - main.js - Coordination (40 lines)
-
-#### 🔧 **Gameplay Changes**
-- **Removed Legacy Evolution System**: Replaced hardcoded level 5 "evolution" menu with normal upgrade system
-- **Unified Upgrade Flow**: All level-ups now use consistent weapon upgrade menu
-- **Better Mod System Integration**: Dynamic imports for mod characters and weapons
-
-#### 🐛 **Bug Fixes**
-- Fixed mod loading paths after folder reorganization
-- Fixed dynamic import paths for ModManager
-- Fixed weapon factory mod weapon loading
-- Fixed all relative import paths throughout codebase
-
-#### 📚 **Documentation**
-- Updated README with new project structure
-- Updated MODDING_GUIDE with development status
-- Added development warnings for mod system
-- Documented all folder organization changes
-
-#### ⚠️ **Known Issues**
-- Mod system still in active development
-- Some mod features may be unstable
-- Testing and stabilization ongoing
+*For detailed changelog, see [CHANGELOG.md](CHANGELOG.md)*
 
 ---
 

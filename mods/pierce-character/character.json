@@ -5,7 +5,7 @@
     "icon": "🎯",
     "startingWeapon": "pierceSniper",
     "startingStats": {
-      "health": 75,
+      "health": 4,
       "speed": 4.3,
       "xp": 0,
       "level": 1,

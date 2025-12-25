@@ -7,6 +7,7 @@ import { Game, ctx, canvas } from './Game.js';
 import { Enemy } from '../entities/Enemy.js';
 import { Gem } from '../entities/Gem.js';
 import { Powerup } from '../powerups/Powerup.js';
+import { PowerupFactory } from '../powerups/PowerupFactory2.js';
 import { Explosion } from '../projectiles/Explosion.js';
 import { PoisonPuddle } from '../projectiles/PoisonPuddle.js';
 import { gameConfig } from '../characters/ConfigManager.js';
@@ -82,10 +83,13 @@ export class GameLoop {
 
             if (e.dead) {
                 Game.enemies.splice(i, 1);
+                // Always spawn gem (XP drop)
                 Game.gems.push(new Gem(e.x, e.y, e.xpValue));
 
-                if (Math.random() < 0.9) { 
-                    Game.powerups.push(new Powerup(e.x, e.y));
+                // Spawn powerup using factory
+                const powerup = PowerupFactory.spawnPowerup(e.x, e.y);
+                if (powerup) {
+                    Game.powerups.push(powerup);
                 }
                 
                 Game.score += 10;
@@ -96,9 +100,23 @@ export class GameLoop {
             // Check collision with player
             const dist = Math.hypot(e.x - Game.player.x, e.y - Game.player.y);
             if (dist < 20) {
-                if (Game.player.weapon && Game.player.weapon.tryBlockAttack()) {
+                // Try to block with shield first
+                if (Game.player.shield && Game.player.shield.tryBlock(1)) {
                     continue;
-                } else {
+                }
+                
+                // Try to block with weapon (legacy paladin mechanic)
+                if (Game.player.weapon && Game.player.weapon.tryBlockAttack) {
+                    if (Game.player.weapon.tryBlockAttack()) {
+                        continue;
+                    }
+                }
+                
+                // No shield/block - take damage
+                Game.player.healthManager.takeDamage(1);
+                
+                // Check if player is dead
+                if (Game.player.healthManager.isDead()) {
                     Game.active = false;
                     document.getElementById('gameover').style.display = 'block';
                 }
@@ -239,10 +257,13 @@ export class GameLoop {
      */
     removeEnemy(e, index, powerupChance) {
         Game.enemies.splice(index, 1);
+        // Always spawn gem (XP drop)
         Game.gems.push(new Gem(e.x, e.y, e.xpValue));
         
-        if (Math.random() < powerupChance) {
-            Game.powerups.push(new Powerup(e.x, e.y));
+        // Spawn powerup if chance succeeds - offset position to avoid overlap
+        const powerup = PowerupFactory.spawnPowerup(e.x, e.y);
+        if (powerup) {
+            Game.powerups.push(powerup);
         }
         
         Game.score += 10;
@@ -257,12 +278,6 @@ export class GameLoop {
             p.update();
             
             if (p.collected) {
-                Game.gems.forEach(gem => {
-                    gem.magnetized = true; 
-                    gem.speed = 12;
-                });
-                
-                console.log("MAGNET ACTIVATED!");
                 Game.powerups.splice(i, 1);
             }
         });

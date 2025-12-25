@@ -318,9 +318,6 @@ export class BaseWeapon {
     }
     
     update() {
-        // Update Holy Shield cooldown and UI
-        this.updateHolyShield();
-        
         // Auto-fire at nearest enemy
         const target = this.getNearestEnemy();
         if (target) {
