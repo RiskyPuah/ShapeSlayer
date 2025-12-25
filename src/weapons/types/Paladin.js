@@ -154,13 +154,10 @@ export class Paladin extends BaseWeapon {
     performArcAttack(mouseX, mouseY) {
         if (!this.owner || !Game.enemies) return;
         
-        // Use smart targeting to find best arc angle
-        const target = this.findBestArcTarget();
-        if (!target) return; // No enemies in range
-        
-        const targetAngle = target.angle;
-        
-        console.log(`🎯 Paladin targeting cluster: ${target.hitCount} enemies at ${target.distance.toFixed(0)}px`);
+        // Calculate angle toward provided target (mouse or nearest enemy)
+        const dx = mouseX - this.owner.x;
+        const dy = mouseY - this.owner.y;
+        const targetAngle = Math.atan2(dy, dx);
         
         // Create visual arc effect
         this.arcEffect = {

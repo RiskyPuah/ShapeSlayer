@@ -40,6 +40,7 @@ export class AimingSystem {
     toggle() {
         this.mode = this.mode === 'auto' ? 'manual' : 'auto';
         console.log(`🎯 Aiming Mode: ${this.mode.toUpperCase()}`);
+        console.log(`   Mouse Position: (${this.mouseX.toFixed(0)}, ${this.mouseY.toFixed(0)})`);
         this.showModeNotification();
         this.updateUI();
     }
@@ -197,11 +198,11 @@ export class AimingSystem {
         
         // Draw crosshair at mouse position
         ctx.strokeStyle = '#ff6600';
-        ctx.lineWidth = 2;
-        ctx.globalAlpha = 0.8;
+        ctx.lineWidth = 3;
+        ctx.globalAlpha = 1.0;
         
-        const size = 15;
-        const gap = 5;
+        const size = 20;
+        const gap = 8;
         
         // Horizontal line
         ctx.beginPath();
@@ -221,8 +222,14 @@ export class AimingSystem {
         
         // Circle
         ctx.beginPath();
-        ctx.arc(this.mouseX, this.mouseY, 20, 0, Math.PI * 2);
+        ctx.arc(this.mouseX, this.mouseY, 25, 0, Math.PI * 2);
         ctx.stroke();
+        
+        // Center dot
+        ctx.fillStyle = '#ff6600';
+        ctx.beginPath();
+        ctx.arc(this.mouseX, this.mouseY, 3, 0, Math.PI * 2);
+        ctx.fill();
         
         ctx.restore();
     }
