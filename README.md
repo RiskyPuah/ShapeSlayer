@@ -11,6 +11,8 @@ ShapeSlayer is a bullet-hell style survival game where you:
 - Unlock and master diverse weapon types  
 - Build unique character combinations
 - Survive as long as possible while growing stronger
+- **Save your progress** and continue later
+- Customize characters with modular trait system
 
 ## 🚀 Quick Start
 
@@ -26,7 +28,67 @@ ShapeSlayer is a bullet-hell style survival game where you:
    ```
 
 3. **Open in browser**
-   Navigate to `http://localhost:8080` and start playing!
+   Navigate to `http://localhost:8080` and enjoy the **SHAPESLAYER™** experience!
+
+## 💾 Save System
+
+### **Auto-Save**
+- Game automatically saves every **30 seconds** during gameplay
+- Visual notification appears when save completes
+- Saves complete game state to localStorage
+
+### **Manual Save**
+- Press **'S' key** during gameplay to save instantly
+- Perfect for quick saves before risky situations
+- Immediate feedback with notification
+
+### **Continue Feature**
+- Main menu shows **"Continue"** button if save exists
+- Restores complete game state:
+  - Player position, health, and stats
+  - Current weapon, level, and upgrades
+  - Shield charges
+  - XP, score, and kills
+  - Active enemies
+- Save includes timestamp for age tracking
+
+### **Save Management**
+All games are saved to browser localStorage:
+- Export save as JSON file (via console: `saveManager.exportSaveFile(Game)`)
+- Import save from file (via console: `saveManager.importSaveFile(file)`)
+- Delete save (via console: `saveManager.deleteSave()`)
+- Check save info (via console: `saveManager.getSaveInfo()`)
+
+## 🎨 Main Menu
+
+The game starts with a professional main menu featuring:
+
+### **Splash Screen**
+- **SHAPESLAYER™** logo in pixel-style font
+- Pulsing glow animation
+- Auto-transitions to menu after 2 seconds
+
+### **Menu Options**
+- **Continue**: Resume from last save (if exists)
+- **Start Game** / **New Game**: Begin fresh adventure
+- **Options**: Settings (coming soon: sound, graphics, controls)
+- **Mod Tools**: Access the mod manager
+- **Character Designer**: Create custom characters
+- **Credits**: Game info and licensing
+
+## ⌨️ Controls
+
+### **Movement**
+- Mouse cursor to move player (follows mouse position)
+
+### **Keyboard Shortcuts**
+- **'S' Key**: Save game instantly
+- **'M' Key**: Open mod manager
+- **'R' Key**: Manual reload (Pierce Sniper only)
+- **ESC Key**: Close mod manager / Return to main menu
+
+### **Character Traits**
+Auto-applied based on character selection
 
 ## ⚔️ Weapon Arsenal
 
@@ -88,6 +150,18 @@ ShapeSlayer is a bullet-hell style survival game where you:
   - **Spread Pattern**: 12-degree arc for coverage
 - **Best For**: Crowd penetration, elemental combinations
 
+### 🎯 **Pierce Sniper** - *Tactical Marksman* (MOD)
+- **Role**: Ammo-based tactical sniper
+- **Features**: Limited magazine, manual reload, tactical gameplay
+- **Special**:
+  - **Ammo System**: 4 shots per magazine
+  - **Tactical Reload**: 5-second reload with donut indicator
+  - **Ammo Packs**: Drop behind player on enemy hit (not kill)
+  - **Reload Cancellation**: Collecting ammo pack stops reload
+  - **Piercing Ammo Pack Shot**: Each pack restores 1 ammo + fires bonus bullet (1 damage, 1 pierce)
+- **Best For**: Precision gameplay, resource management, tactical positioning
+- **Available**: Via Pierce Character mod (see Mod System section)
+
 ## 🛡️ Enemy Types
 
 ### 🟥 **Normal Enemy** - *Basic Threat*
@@ -140,6 +214,13 @@ ShapeSlayer is a bullet-hell style survival game where you:
 - **Stats**: 85 HP, 4.2 Speed
 - **Traits**: Marksman + Lucky
 
+### 🎯 **Pierce** - *Tactical Sniper* (MOD)
+- **Weapon**: Pierce Sniper (ammo-based tactical weapon)
+- **Stats**: 75 HP (4 hearts), 4.3 Speed
+- **Traits**: Marksman + Tactical
+- **Unique**: Ammo system requiring resource management
+- **Available**: Enable Pierce Character mod in Mod Manager
+
 ## 🔧 Game Mechanics
 
 ### 💨 **Bullet Decay System**
@@ -189,7 +270,12 @@ ShapeSlayer/
 ├── mods/                   # Mod system
 │   ├── enabled.json        # Enabled mods list
 │   ├── mod-template/       # Template for new mods
-│   └── pierce-character/   # Example mod
+│   └── pierce-character/   # Pierce Character mod (COMPLETE)
+│       ├── mod.json        # Mod manifest
+│       ├── mod.js          # Mod initialization
+│       ├── character.json  # Pierce character definition
+│       ├── PierceSniper.js # Tactical sniper weapon
+│       └── AmmoPack.js     # Ammo pack collectible system
 └── src/                    # Source code (modular architecture)
     ├── engine/             # Core game engine
     │   ├── main.js         # Game entry point & coordination
@@ -213,7 +299,7 @@ ShapeSlayer/
     │   ├── CharacterSelectionScreen.js  # Character UI
     │   ├── ConfigManager.js # Configuration loader
     │   └── SelectionScreen.js # Upgrade selection UI
-    ├── mods-system/        # Mod system (⚠️ IN DEVELOPMENT)
+    ├── mods-system/        # Mod system (✅ STABLE)
     │   ├── ModManager.js   # Mod discovery & loading
     │   └── ModManagerScreen.js  # Mod management UI
     └── weapons/            # Weapon system
@@ -288,19 +374,28 @@ ShapeSlayer/
 
 ## 🛠️ Development
 
-### 🔧 Mod System (⚠️ IN DEVELOPMENT)
+### 🔧 Mod System (✅ STABLE)
 
-ShapeSlayer includes a modding system that allows custom characters, weapons, and gameplay mechanics. **The mod system is currently under active development and may have issues or incomplete features.**
+ShapeSlayer includes a fully-functional modding system that allows custom characters, weapons, and gameplay mechanics.
 
-For modding documentation, see [MODDING_GUIDE.md](MODDING_GUIDE.md).
-
-**Status:**
+**Features:**
 - ✅ Mod discovery and loading
-- ✅ Custom character support
+- ✅ Custom character support  
 - ✅ Custom weapon integration
-- ⚠️ Mod manager UI (testing)
-- 🚧 Documentation (in progress)
-- 🚧 Stability improvements (ongoing)
+- ✅ Mod manager UI
+- ✅ Pierce Character mod (complete ammo system example)
+
+**Quick Start:**
+1. Press **'M'** during main menu or game to open Mod Manager
+2. Enable/disable mods as desired
+3. Return to main menu to reload with new mods
+4. Select modded characters in character selection
+
+**Example Mods:**
+- **Pierce Character**: Tactical sniper with ammo system, manual reload, and ammo pack mechanics
+- See [MODDING_GUIDE.md](MODDING_GUIDE.md) for creating your own mods
+
+For complete modding documentation, see [MODDING_GUIDE.md](MODDING_GUIDE.md).
 
 ### Adding New Weapons
 1. Create weapon class in `src/weapons/types/`
@@ -322,7 +417,26 @@ All game balance is controlled via JSON files in `/data/`:
 
 ## 🎉 Recent Updates
 
-### ❤️ **Version 1.2.5 - "The Heartful Update"** *(Latest - December 25, 2025)*
+### 💾 **Version 1.3.0 - "The Professional Update"** *(Latest - December 25, 2025)*
+- **Main Menu System**: Professional SHAPESLAYER™ splash screen with menu navigation
+- **Save System**: Auto-save (30s), manual save (S key), Continue feature
+- **UI Improvements**: Restored game UI visibility, proper menu transitions
+- **Mod Integration**: Fixed mod loading sequence and character availability
+
+### 🔧 **Version 1.3.0.1 - "Navigation Fixes"**
+- **Bug Fixes**: Fixed character selection auto-showing, mod manager blank screen
+- **Mod System**: Removed broken mod-template from loading sequence
+- **UI Polish**: Menu properly hides/shows with UI restoration
+
+### 🎯 **Version 1.3.0.2 - "Pierce Perfection"** *(Latest - December 25, 2025)*
+- **Complete Ammo System**: 4-shot magazine with tactical reload (5s)
+- **Visual Feedback**: Donut reload indicator, color-coded ammo display
+- **Ammo Pack Mechanics**: Drop behind player on hit (not kill), restore 1 ammo
+- **Reload Cancellation**: Collecting ammo cancels reload immediately
+- **Bonus Shot**: Ammo packs fire piercing bullet (1 damage, 1 pierce)
+- **Weapon Loading**: Priority system for mod weapons over core weapons
+
+### ❤️ **Version 1.2.5 - "The Heartful Update"** *(December 25, 2025)*
 - **Health System Overhaul**: Binding of Isaac style hearts (2 HP per heart)
 - **Shield System Rework**: Modular shield classes with visual icons
 - **Smart Paladin Targeting**: AI targets enemy clusters intelligently

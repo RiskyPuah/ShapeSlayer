@@ -9,6 +9,7 @@ import { WeaponFactory } from '../weapons/WeaponFactory.js';
 import { characterManager } from '../characters/CharacterManager.js';
 import { gameInitializer } from './GameInitializer.js';
 import { gameLoop } from './GameLoop.js';
+import { saveManager } from './SaveManager.js';
 
 export class GameStarter {
     constructor() {
@@ -58,6 +59,9 @@ export class GameStarter {
             Game.active = true;
             console.log("✅ GAME STARTED!");
             
+            // Enable auto-save
+            saveManager.startAutoSave(Game);
+            
             // Force initial draw
             gameLoop.draw();
         } catch (error) {
@@ -70,13 +74,16 @@ export class GameStarter {
      * Create weapon for player
      */
     async createWeapon(weaponType) {
+        // Try async first for mod weapons, then fall back to sync for core weapons
         try {
-            Game.player.weapon = WeaponFactory.createWeapon(Game.player, weaponType);
-            console.log("✅ Weapon created (sync):", Game.player.weapon);
-        } catch (e) {
-            console.log("Trying async weapon creation for mod weapon...");
+            console.log(`🔍 Creating weapon: ${weaponType}`);
             Game.player.weapon = await WeaponFactory.createWeaponAsync(Game.player, weaponType);
-            console.log("✅ Weapon created (async):", Game.player.weapon);
+            console.log("✅ Weapon created:", Game.player.weapon);
+        } catch (error) {
+            console.error("❌ Failed to create weapon:", error);
+            // Fall back to pistol
+            Game.player.weapon = WeaponFactory.createWeapon(Game.player, 'pistol');
+            console.log("⚠️ Defaulted to pistol");
         }
     }
 
@@ -109,6 +116,75 @@ export class GameStarter {
         if (characterSelection) characterSelection.style.display = 'none';
         if (weaponSelection) weaponSelection.style.display = 'none';
         console.log("✅ Menus hidden");
+    }
+
+    /**
+     * Load and restore saved game
+     * @returns {boolean} Success status
+     */
+    loadSavedGame() {
+        const saveData = saveManager.loadGame();
+        
+        if (!saveData) {
+            console.log('No save file to load');
+            return false;
+        }
+
+        try {
+            console.log('📂 Restoring saved game...');
+
+            // Restore player
+            Game.player = new Player(
+                saveData.player.x,
+                saveData.player.y,
+                saveData.player.maxHealth
+            );
+            
+            Game.player.healthManager.currentHealth = saveData.player.health;
+            Game.player.speed = saveData.player.speed;
+            Game.player.isDead = saveData.player.isDead || false;
+
+            // Restore weapon
+            const weaponType = saveData.weapon.type;
+            this.selectedWeapon = weaponType;
+            Game.player.weapon = WeaponFactory.createWeapon(Game.player, weaponType);
+            Game.player.weapon.level = saveData.weapon.level;
+            Game.player.weapon.upgrades = saveData.weapon.upgrades || [];
+
+            // Restore shield if present
+            if (saveData.shield) {
+                // Shield restoration handled by character traits or powerups
+                console.log('Shield data found:', saveData.shield);
+            }
+
+            // Restore character
+            this.selectedCharacter = saveData.character;
+
+            // Restore game progress
+            Game.level = saveData.progress.level;
+            Game.xp = saveData.progress.xp;
+            Game.xpThreshold = saveData.progress.xpThreshold;
+            Game.score = saveData.progress.score;
+            Game.kills = saveData.progress.kills || 0;
+
+            // Update UI
+            document.getElementById('lvl').textContent = Game.level;
+            document.getElementById('score').textContent = Game.score;
+
+            // Hide menus and start game
+            this.hideMenus();
+            Game.active = true;
+            
+            // Enable auto-save
+            saveManager.startAutoSave(Game);
+
+            console.log('✅ Game restored successfully!');
+            return true;
+
+        } catch (error) {
+            console.error('❌ Failed to restore saved game:', error);
+            return false;
+        }
     }
 }
 

@@ -12,6 +12,8 @@ import { SelectionScreen, selectionScreen } from '../characters/SelectionScreen.
 import { characterSelectionScreen } from '../characters/CharacterSelectionScreen.js';
 import { modManager } from '../mods-system/ModManager.js';
 import { modManagerScreen } from '../mods-system/ModManagerScreen.js';
+import { mainMenuScreen } from './MainMenuScreen.js';
+import { saveManager } from './SaveManager.js';
 
 console.log("🎮 ShapeSlayer Game Loading...");
 
@@ -30,6 +32,8 @@ window.selectionScreen = selectionScreen;
 window.characterSelectionScreen = characterSelectionScreen;
 window.modManager = modManager;
 window.modManagerScreen = modManagerScreen;
+window.mainMenuScreen = mainMenuScreen;
+window.saveManager = saveManager;
 
 // Expose character screen functions for HTML onclick handlers
 window.showCharacterTab = (tab) => characterSelectionScreen.showCharacterTab(tab);
@@ -41,5 +45,10 @@ window.cancelCharacterCreation = () => characterSelectionScreen.cancelCreation()
 // Start the game loop (paused until player selects character)
 Game.active = false;
 gameLoop.start();
+
+// Show main menu on startup
+setTimeout(() => {
+    mainMenuScreen.show();
+}, 100);
 
 console.log("✅ ShapeSlayer Ready!");

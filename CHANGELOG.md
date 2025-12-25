@@ -4,6 +4,119 @@ All notable changes to ShapeSlayer will be documented in this file.
 
 ---
 
+## Version 1.3.0.2 - "Pierce Character Fixes" *(December 25, 2025)*
+
+### 🐛 **Bug Fixes**
+- **Pierce Character Weapon Loading**: Fixed Pierce Sniper weapon not loading
+  - Updated import paths from `src/Game.js` to `src/engine/Game.js`
+  - Fixed WeaponFactory to prioritize mod weapons over core weapons
+  - GameStarter now uses async weapon creation first
+  
+- **Pierce Sniper Ammo System**: Implemented proper ammo mechanics
+  - Fixed method name from `fire()` to `shoot()` to match BaseWeapon
+  - Fixed `canFire()` crash - removed invalid `super.canFire()` call
+  - Ammo now properly decreases when shooting (4 max ammo)
+  - Ammo display updates correctly in real-time with color coding
+  
+- **Ammo Pack Mechanics**: Complete redesign of drop and collection system
+  - **Ammo packs now drop behind player when hitting enemies** (not on kill)
+  - Collecting ammo pack restores 1 ammo
+  - **Cancels reload if currently reloading** - no more sitting duck!
+  - Fires quick piercing bullet (1 damage, 1 pierce) toward nearest enemy
+  - 5 second reload time when all ammo exhausted
+  
+- **Visual Feedback**: Added reload indicator
+  - Donut-style circular progress bar appears above player during reload
+  - Blue progress arc with "R" text in center
+  - Shows exact reload progress (0-100%)
+
+### 🎯 **Pierce Character Final Features**
+- ✅ Limited ammo system (4 rounds)
+- ✅ Tactical ammo management gameplay
+- ✅ Ammo packs drop behind player on enemy hits
+- ✅ Reload cancellation on ammo pickup
+- ✅ Auto-reload when out of ammo (5 seconds)
+- ✅ Visual reload indicator
+- ✅ Color-coded ammo display (white → yellow → red)
+- ✅ High damage sniper gameplay (4 damage per shot)
+
+---
+
+## Version 1.3.0.1 - "Bug Fixes" *(December 25, 2025)*
+
+### 🐛 **Bug Fixes**
+- **Main Menu Navigation**: Fixed character selection auto-showing on startup
+  - GameInitializer no longer automatically displays character selection
+  - Main menu now properly controls all navigation flows
+  
+- **Mod Manager**: Fixed mod-template loading error
+  - Removed 'mod-template' from known mods list (it's just a template)
+  - Eliminates MIME type and 404 errors on startup
+  
+- **Mod Tools Screen**: Fixed blank screen when closing mod manager
+  - Mod manager now returns to main menu when closed with ESC key
+  - Proper navigation flow between menu and mod tools
+  
+- **Game UI Display**: Fixed missing XP bar, level, and score display
+  - Main menu now properly restores UI elements when starting game
+  - All HUD elements (XP bar, level counter, score) now visible during gameplay
+
+---
+
+## Version 1.3.0 - "The Main Menu Update" *(December 25, 2025)*
+
+### 🎮 **Main Menu System**
+- **Splash Screen**: SHAPESLAYER™ logo with pixel-style font
+  - Pulsing glow effect animation
+  - Auto-transitions to main menu after 2 seconds
+  - Professional title screen presentation
+
+- **Main Menu**: Full menu system with navigation
+  - **Continue**: Resume from saved game (if save exists)
+  - **Start Game** / **New Game**: Begin new adventure
+  - **Options**: Settings menu (placeholder for future features)
+  - **Mod Tools**: Access mod manager directly from menu
+  - **Character Designer**: Jump straight to character creation
+  - **Credits**: Game information and licensing
+  - Animated button hover effects with glow
+
+### 💾 **Save System**
+- **Auto-Save**: Game automatically saves every 30 seconds
+  - Visual notification when save occurs
+  - Saves to localStorage with full game state
+  
+- **Manual Save**: Press 'S' key during gameplay to save instantly
+  - Immediate feedback with save notification
+  - Can be used anytime during active gameplay
+
+- **Save State Includes**:
+  - Player position, health, and character stats
+  - Current weapon, level, and upgrades
+  - Shield charges and type
+  - Game progress (XP, level, score, kills)
+  - Nearby enemies and their states
+  - Timestamp for save age tracking
+
+- **Continue Feature**: Main menu shows "Continue" button if save exists
+  - Displays save info (character, level, time since save)
+  - Restores complete game state
+  - Graceful fallback if save is corrupted
+
+- **Save Management**:
+  - Export save as JSON file (via SaveManager API)
+  - Import save from file (via SaveManager API)
+  - Delete save option available
+  - Version compatibility checking
+
+### 🎯 **Quality of Life**
+- Game now starts with professional main menu instead of character selection
+- Seamless navigation between menu, character selection, and gameplay
+- Save persistence across browser sessions via localStorage
+- Auto-save ensures minimal progress loss
+- Keyboard shortcuts: 'S' to save, 'M' for mods, 'R' to reload (Pierce Sniper)
+
+---
+
 ## Version 1.2.5.1 - "Bug Fixes" *(December 25, 2025)*
 
 ### 🐛 **Bug Fixes**

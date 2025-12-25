@@ -8,6 +8,7 @@ import { Powerup } from '../powerups/Powerup.js';
 import { Orbital } from '../projectiles/Orbital.js';
 import { modManagerScreen } from '../mods-system/ModManagerScreen.js';
 import { SelectionScreen, selectionScreen } from '../characters/SelectionScreen.js';
+import { saveManager } from './SaveManager.js';
 
 export class EventHandlers {
     constructor() {
@@ -56,6 +57,14 @@ export class EventHandlers {
             // Open mod manager with 'M' key
             if (event.key.toLowerCase() === 'm' && !modManagerScreen.isVisible) {
                 modManagerScreen.show();
+                event.preventDefault();
+                return;
+            }
+            
+            // Manual save with 'S' key (during active game)
+            if (event.key.toLowerCase() === 's' && Game.active && Game.player && !Game.player.isDead) {
+                saveManager.saveGame(Game);
+                saveManager.showSaveNotification();
                 event.preventDefault();
                 return;
             }

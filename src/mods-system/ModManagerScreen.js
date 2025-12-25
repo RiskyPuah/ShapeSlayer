@@ -29,6 +29,11 @@ export class ModManagerScreen {
     hide() {
         this.isVisible = false;
         console.log("📋 Mod Manager closed");
+        
+        // Show main menu when closing mod manager
+        if (window.mainMenuScreen) {
+            window.mainMenuScreen.show();
+        }
     }
     
     async refreshModList() {

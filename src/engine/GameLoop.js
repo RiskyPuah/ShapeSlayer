@@ -213,6 +213,15 @@ export class GameLoop {
         } else {
             const isDead = e.takeDamage(b.damage);
             
+            // Drop ammo pack behind player when Pierce Sniper hits enemy
+            if (b.pierceSniper && b.pierceSniperWeapon && Game.player) {
+                // Drop behind player (opposite of aim direction)
+                const angle = Math.atan2(b.vy, b.vx);
+                const dropX = Game.player.x - Math.cos(angle) * 40;
+                const dropY = Game.player.y - Math.sin(angle) * 40;
+                b.pierceSniperWeapon.dropAmmoPackAt(dropX, dropY);
+            }
+            
             if (isDead) {
                 this.removeEnemy(e, enemyIndex, 0.1);
             }
@@ -359,6 +368,11 @@ export class GameLoop {
             
             if (Game.player.weapon && Game.player.weapon.drawArcEffect) {
                 Game.player.weapon.drawArcEffect();
+            }
+            
+            // Draw Pierce Sniper reload indicator
+            if (Game.player.weapon && Game.player.weapon.drawReloadIndicator) {
+                Game.player.weapon.drawReloadIndicator(ctx);
             }
         }
         

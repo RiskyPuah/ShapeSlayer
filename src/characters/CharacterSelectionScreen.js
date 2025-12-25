@@ -24,7 +24,11 @@ export class CharacterSelectionScreen {
         }
         if (weaponSelection) weaponSelection.style.display = 'none';
         
+        // Refresh character list to include any mod characters
         this.showCharacterTab('default');
+        
+        // Log available characters for debugging
+        console.log('📋 Available characters:', Object.keys(characterManager.characters));
     }
 
     /**

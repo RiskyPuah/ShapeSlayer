@@ -1,5 +1,5 @@
 import { BaseWeapon } from '../../src/weapons/BaseWeapon.js';
-import { Game } from '../../src/Game.js';
+import { Game } from '../../src/engine/Game.js';
 import { Bullet } from '../../src/weapons/Bullet.js';
 import { AmmoPack } from './AmmoPack.js';
 
@@ -9,7 +9,7 @@ export class PierceSniper extends BaseWeapon {
         this.ammo = 4;
         this.maxAmmo = 4;
         this.isReloading = false;
-        this.reloadTime = 120; // 2 seconds at 60fps
+        this.reloadTime = 300; // 5 seconds at 60fps
         this.reloadTimer = 0;
     }
     
@@ -27,24 +27,37 @@ export class PierceSniper extends BaseWeapon {
     
     // Override canFire to check ammo
     canFire() {
-        return super.canFire() && this.ammo > 0 && !this.isReloading;
+        // Check fire rate cooldown and ammo
+        return (Game.frameCount - this.lastShot > this.fireRate) && this.ammo > 0 && !this.isReloading;
     }
     
-    // Override fire to consume ammo
-    fire(mouseX, mouseY) {
+    // Override shoot to consume ammo
+    shoot(mouseX, mouseY) {
         if (!this.canFire()) return;
         
-        // Fire the weapon
-        super.fire(mouseX, mouseY);
+        // Fire the weapon using BaseWeapon's shoot
+        this.createProjectiles(mouseX, mouseY);
+        this.lastShot = Game.frameCount;
         
         // Consume ammo
         this.ammo--;
         console.log(`Pierce Sniper fired! Ammo: ${this.ammo}/${this.maxAmmo}`);
         
+        // Update ammo display
+        this.updateAmmoDisplay();
+        
         // Auto-reload when out of ammo
         if (this.ammo <= 0) {
             this.startReload();
         }
+    }
+    
+    // Update ammo display
+    updateAmmoDisplay() {
+        const ammoCount = document.getElementById('ammo-count');
+        const ammoMax = document.getElementById('ammo-max');
+        if (ammoCount) ammoCount.textContent = this.ammo;
+        if (ammoMax) ammoMax.textContent = this.maxAmmo;
     }
     
     // Start reload process
@@ -69,33 +82,14 @@ export class PierceSniper extends BaseWeapon {
         }
     }
     
-    // Complete reload and drop ammo pack
+    // Complete reload - no ammo pack drop, just reload
     completeReload() {
         this.isReloading = false;
         this.ammo = this.maxAmmo;
         this.reloadTimer = 0;
+        this.updateAmmoDisplay();
         
-        // Drop ammo pack at player position
-        this.dropAmmoPack();
-        
-        console.log("Pierce Sniper reload complete!");
-    }
-    
-    // Drop ammo pack that restores ammo and spawns projectile
-    dropAmmoPack() {
-        if (!Game.ammoPacks) {
-            Game.ammoPacks = [];
-        }
-        
-        // Create ammo pack slightly behind the player
-        const angle = Math.atan2(Game.mouseY - this.owner.y, Game.mouseX - this.owner.x);
-        const dropX = this.owner.x - Math.cos(angle) * 30;
-        const dropY = this.owner.y - Math.sin(angle) * 30;
-        
-        const ammoPack = new AmmoPack(dropX, dropY, this);
-        Game.ammoPacks.push(ammoPack);
-        
-        console.log("Ammo pack dropped!");
+        console.log("✅ Pierce Sniper reload complete!");
     }
     
     // Manual reload (for player control)
@@ -172,8 +166,53 @@ export class PierceSniper extends BaseWeapon {
             bullet.radius = 6; // Slightly larger bullet
             bullet.weaponType = this.type;
             bullet.type = 'bullet';
+            bullet.pierceSniper = true; // Mark as Pierce Sniper bullet
+            bullet.pierceSniperWeapon = this; // Reference to weapon for ammo pack drop
             
             Game.bullets.push(bullet);
         }
+    }
+    
+    // Drop ammo pack at specific position
+    dropAmmoPackAt(x, y) {
+        if (!Game.ammoPacks) {
+            Game.ammoPacks = [];
+        }
+        
+        const ammoPack = new AmmoPack(x, y, this);
+        Game.ammoPacks.push(ammoPack);
+        
+        console.log("📦 Ammo pack dropped behind player!");
+    }
+    
+    // Draw reload indicator (donut animation)
+    drawReloadIndicator(ctx) {
+        if (!this.isReloading || !this.owner) return;
+        
+        const x = this.owner.x;
+        const y = this.owner.y - 30; // Above player
+        const radius = 15;
+        const progress = (this.reloadTime - this.reloadTimer) / this.reloadTime;
+        
+        // Draw background circle
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+        
+        // Draw progress arc (donut style)
+        ctx.beginPath();
+        ctx.arc(x, y, radius, -Math.PI / 2, (-Math.PI / 2) + (progress * Math.PI * 2));
+        ctx.strokeStyle = '#00aaff'; // Pierce blue color
+        ctx.lineWidth = 4;
+        ctx.stroke();
+        
+        // Draw inner text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('R', x, y);
     }
 }

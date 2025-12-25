@@ -1,4 +1,4 @@
-import { Game, ctx } from '../../src/Game.js';
+import { Game, ctx } from '../../src/engine/Game.js';
 import { Bullet } from '../../src/weapons/Bullet.js';
 
 export class AmmoPack {
@@ -38,14 +38,23 @@ export class AmmoPack {
         
         this.collected = true;
         
-        // Restore ammo to Pierce Sniper
+        // Restore 1 ammo to Pierce Sniper
         if (this.weapon && this.weapon.type === 'pierceSniper') {
-            const ammoToRestore = Math.min(2, this.weapon.maxAmmo - this.weapon.ammo);
-            this.weapon.ammo += ammoToRestore;
-            console.log(`Ammo pack collected! Restored ${ammoToRestore} ammo`);
+            this.weapon.ammo = Math.min(this.weapon.ammo + 1, this.weapon.maxAmmo);
+            
+            // Cancel reload if currently reloading
+            if (this.weapon.isReloading) {
+                this.weapon.isReloading = false;
+                this.weapon.reloadTimer = 0;
+                console.log(`📦 Ammo pack collected! Reload cancelled. Ammo: ${this.weapon.ammo}/${this.weapon.maxAmmo}`);
+            } else {
+                console.log(`📦 Ammo pack collected! Ammo: ${this.weapon.ammo}/${this.weapon.maxAmmo}`);
+            }
+            
+            this.weapon.updateAmmoDisplay();
         }
         
-        // Spawn projectile toward nearest enemy
+        // Spawn quick projectile toward nearest enemy (1 damage, piercing)
         this.spawnProjectile();
         
         // Mark for removal
@@ -74,24 +83,26 @@ export class AmmoPack {
             const distance = Math.hypot(dx, dy);
             
             if (distance > 0) {
-                const speed = 12;
+                const speed = 20; // Very fast bullet
                 const vx = (dx / distance) * speed;
                 const vy = (dy / distance) * speed;
                 
-                // Create homing projectile
+                // Create homing projectile with 1 pierce
                 const bullet = new Bullet(this.x, this.y, vx, vy);
-                bullet.damage = 1;
+                bullet.damage = 1; // Fixed 1 damage
                 bullet.color = '#ffaa00'; // Orange ammo pack projectile
                 bullet.radius = 4;
                 bullet.weaponType = 'ammoPack';
-                bullet.type = 'bullet';
+                bullet.type = 'piercing'; // Piercing bullet
+                bullet.pierceCount = 1; // Can pierce 1 enemy
+                bullet.hitEnemies = new Set(); // Track hit enemies
                 
                 if (!Game.bullets) {
                     Game.bullets = [];
                 }
                 Game.bullets.push(bullet);
                 
-                console.log("Ammo pack fired projectile at nearest enemy!");
+                console.log("🔫 Ammo pack fired piercing projectile!");
             }
         }
     }

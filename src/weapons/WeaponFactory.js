@@ -39,20 +39,15 @@ export class WeaponFactory {
     
     // Async version for mod weapons
     static async createWeaponAsync(owner, weaponType) {
-        // First check for core weapons
-        const coreWeapon = this.createWeapon(owner, weaponType);
-        if (coreWeapon.type !== 'pistol' || weaponType === 'pistol') {
-            return coreWeapon;
-        }
-
-        // Check for mod weapons only if core weapon not found
+        // Check for mod weapons FIRST
         const modWeapon = await this.createModWeapon(owner, weaponType);
         if (modWeapon) {
             return modWeapon;
         }
 
-        console.warn(`Unknown weapon type: ${weaponType}, defaulting to pistol`);
-        return new Pistol(owner);
+        // Then fall back to core weapons
+        const coreWeapon = this.createWeapon(owner, weaponType);
+        return coreWeapon;
     }
 
     static async createModWeapon(owner, weaponType) {
