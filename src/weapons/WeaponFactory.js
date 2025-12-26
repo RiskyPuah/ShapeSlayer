@@ -7,6 +7,7 @@ import { Sniper } from './types/Sniper.js';
 import { PlagueDoctor } from './types/PlagueDoctor.js';
 import { Pyromancer } from './types/Pyromancer.js';
 import { CardThrower } from './types/CardThrower.js';
+import { ToxicSpray } from './types/ToxicSpray.js';
 import { modManager } from '../mods-system/ModManager.js';
 
 export class WeaponFactory {
@@ -31,6 +32,8 @@ export class WeaponFactory {
                 return new Pyromancer(owner);
             case 'cardThrower':
                 return new CardThrower(owner);
+            case 'toxicSpray':
+                return new ToxicSpray(owner);
             default:
                 console.warn(`Unknown weapon type: ${weaponType}, defaulting to pistol`);
                 return new Pistol(owner);

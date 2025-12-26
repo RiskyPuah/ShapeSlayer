@@ -252,6 +252,37 @@
           "effect": "Adds burn DOT to card hits"
         }
       }
+    },
+    "toxicSpray": {
+      "name": "Toxic Spray",
+      "description": "Hairspray weapon that shoots toxic gas in a spreading arc. Limited ammo.",
+      "stats": {
+        "fireRate": 45,
+        "damage": 0.1,
+        "projectileCount": 3,
+        "spread": 0.524,
+        "speedModifier": 0.9,
+        "projectileType": "poison",
+        "maxAmmo": 3,
+        "reloadTime": 90,
+        "poisonDuration": 120,
+        "poisonDamagePerTick": 0.5,
+        "holyShieldMaxCooldown": 0
+      },
+      "upgrades": {
+        "damageIncrease": 0.3,
+        "fireRateDecrease": 3,
+        "fireRateMin": 25,
+        "poisonDurationIncrease": 30,
+        "poisonDamageIncrease": 0.2,
+        "maxAmmoIncrease": 1,
+        "reloadTimeDecrease": 15
+      },
+      "visuals": {
+        "icon": "💨",
+        "color": "#88ff44",
+        "description": "Toxic gas spray with poison DOT"
+      }
     }
   }
 }

@@ -102,6 +102,17 @@
         "upgradeRerollBonus": 1
       }
     },
+    "poisonMaster": {
+      "name": "☣️ Poison Master",
+      "description": "Enhanced poison damage and duration",
+      "category": "combat",
+      "rarity": "uncommon",
+      "effects": {
+        "poisonDamageMultiplier": 1.5,
+        "poisonDurationMultiplier": 1.3
+      },
+      "applicableWeapons": ["plagueDoctor", "toxicSpray"]
+    },
     "vampire": {
       "name": "🧛 Vampiric",
       "description": "Heal when dealing damage",

@@ -89,7 +89,7 @@ The game starts with a professional main menu featuring:
 ### **Keyboard Shortcuts**
 - **'F5' Key**: Save game instantly
 - **'M' Key**: Open mod manager
-- **'R' Key**: Manual reload (Pierce Sniper only)
+- **'R' Key**: Manual reload (ammo-based weapons: Pierce Sniper, Toxic Spray)
 - **ESC Key**: Close mod manager / Return to main menu
 
 ### **Character Traits**
@@ -167,6 +167,18 @@ Auto-applied based on character selection
 - **Best For**: Precision gameplay, resource management, tactical positioning
 - **Available**: Via Pierce Character mod (see Mod System section)
 
+### 💨 **Toxic Spray** - *Chemical Warfare* *(v1.4.1)*
+- **Role**: Ammo-based toxic gas spreader
+- **Features**: Limited spray capacity, fast unload, poison DOT
+- **Special**:
+  - **Ammo System**: 3 sprays per canister
+  - **Quick Reload**: 1.5-second reload with circular indicator
+  - **Toxic Clouds**: Shoots 3 poisonous gas clouds in spread pattern
+  - **Poison DOT**: Clouds deal damage over time and bypass shields
+  - **Dissipating Spray**: Clouds slow down and expand over distance
+- **Best For**: Fast combat, poison builds, EMZ-inspired gameplay
+- **Available**: Core weapon with Toxic Influencer character
+
 ## 🛡️ Enemy Types
 
 ### 🟥 **Normal Enemy** - *Basic Threat*
@@ -218,6 +230,13 @@ Auto-applied based on character selection
 - **Weapon**: Card Thrower (piercing specialist)
 - **Stats**: 85 HP, 4.2 Speed
 - **Traits**: Marksman + Lucky
+
+### 💨 **Toxic Influencer** - *Chemical Warfare* *(v1.4.1)*
+- **Weapon**: Toxic Spray (ammo-based hairspray weapon)
+- **Stats**: 75 HP (4 hearts), 4.5 Speed
+- **Traits**: Speed Demon + Poison Master
+- **Unique**: Fast spray attack with 3-ammo capacity, toxic clouds deal poison DOT
+- **Style**: EMZ-inspired toxic gas spreader
 
 ### 🎯 **Pierce** - *Tactical Sniper* (MOD)
 - **Weapon**: Pierce Sniper (ammo-based tactical weapon)

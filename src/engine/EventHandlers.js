@@ -77,9 +77,10 @@ export class EventHandlers {
                 return;
             }
             
-            // Handle Pierce character reload with 'R' key
+            // Handle ammo-based weapon reload with 'R' key
             if (event.key.toLowerCase() === 'r' && Game.player && Game.player.weapon) {
-                if (Game.player.weapon.type === 'pierceSniper' && typeof Game.player.weapon.reload === 'function') {
+                const ammoWeapons = ['pierceSniper', 'toxicSpray'];
+                if (ammoWeapons.includes(Game.player.weapon.type) && typeof Game.player.weapon.reload === 'function') {
                     Game.player.weapon.reload();
                     event.preventDefault();
                 }

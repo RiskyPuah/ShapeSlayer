@@ -118,6 +118,23 @@
         "primary": "#4488ff",
         "secondary": "#ffffff"
       }
+    },
+    "toxicInfluencer": {
+      "name": "Toxic Influencer",
+      "description": "Sprays toxic hairspray in deadly clouds. Fast unload, ammo-based.",
+      "icon": "💨",
+      "startingWeapon": "toxicSpray",
+      "startingStats": {
+        "health": 5,
+        "speed": 4.5,
+        "xp": 0,
+        "level": 1
+      },
+      "traits": ["speedDemon", "poisonMaster"],
+      "colors": {
+        "primary": "#88ff44",
+        "secondary": "#ffffff"
+      }
     }
   },
   "characterSchema": {

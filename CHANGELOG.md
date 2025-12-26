@@ -4,6 +4,61 @@ All notable changes to ShapeSlayer will be documented in this file.
 
 ---
 
+## Version 1.4.1 - "The Toxic Influencer" *(December 25, 2025)*
+
+### 💨 **New Character: Toxic Influencer**
+
+**EMZ-Inspired Chemical Warfare Specialist**
+- **Icon**: 💨 (Toxic gas cloud)
+- **Starting Weapon**: Toxic Spray (ammo-based hairspray)
+- **Stats**: 75 HP (4 hearts), 4.5 Speed
+- **Traits**: Speed Demon + Poison Master
+- **Playstyle**: Fast-paced toxic gas spreader with poison DOT
+
+### 🧪 **New Weapon: Toxic Spray**
+
+**Ammo-Based Hairspray Weapon** (`src/weapons/types/ToxicSpray.js`)
+- **Ammo System**: 3 sprays per canister, 1.5-second reload (90 frames)
+- **Firing Pattern**: Shoots 3 toxic gas clouds in 30-degree spread arc
+- **Damage**: 2 per hit + poison DOT (0.5 damage/tick for 120 frames)
+- **Visual Effects**: 
+  - Pulsing toxic green clouds (#88ff44)
+  - Radial gradient with glowing core
+  - Dissipating spray physics (velocity decay)
+- **Reload Indicator**: Circular progress indicator (bottom-right)
+- **Ammo Display**: 💨 x [count] with color-coded ammo state
+
+**Weapon Mechanics**
+- Fast unload rate (45 frame fire rate)
+- Projectiles slow down and expand over distance (vx/vy *= 0.97)
+- Poison type projectiles bypass enemy shields
+- Manual reload with 'R' key
+- Reload cancellation support (future ammo pack integration)
+
+### ⚙️ **Technical Updates**
+
+**WeaponFactory Integration** (`src/weapons/WeaponFactory.js`)
+- Added ToxicSpray import and case registration
+- Works with both synchronous and async weapon creation
+- Full mod compatibility maintained
+
+**EventHandlers Enhancement** (`src/engine/EventHandlers.js`)
+- Updated R key handler to support multiple ammo-based weapons
+- Array-based check for ['pierceSniper', 'toxicSpray']
+- Future-proof for additional ammo weapons
+
+**Data Configuration**
+- Added `toxicSpray` to `data/weapons.json` with full stats
+- Added `toxicInfluencer` character to `data/characters.json`
+- Configured weapon upgrades and visual properties
+
+### 📚 **Documentation**
+- Updated README with Toxic Influencer character and Toxic Spray weapon
+- Updated controls section (R key for multiple ammo weapons)
+- Added weapon arsenal entry with mechanics breakdown
+
+---
+
 ## Version 1.4.0.1 - "Control Conflict Hotfix" *(December 25, 2025)*
 
 ### 🐛 **Critical Bug Fixes**

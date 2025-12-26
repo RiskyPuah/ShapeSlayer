@@ -226,6 +226,13 @@ export class GameLoop {
             if (isDead) {
                 this.removeEnemy(e, enemyIndex, 0.1);
             }
+            
+            // Check if bullet has pierce capability
+            if (b.pierceCount !== undefined && b.pierceCount > 0) {
+                b.pierceCount--;
+                return b.pierceCount <= 0; // Only remove if pierce count exhausted
+            }
+            
             return true;
         }
     }
