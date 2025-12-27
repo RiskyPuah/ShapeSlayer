@@ -441,6 +441,10 @@ All game balance is controlled via JSON files in `/data/`:
 
 ## 🎉 Recent Updates
 
+### ⚙️**Version 1.4.2 -  Quality of Life Improvements**
+- **Auto aim UI Changes** - Moved the indicator to the right
+- **Ammo Bar visualization** - Added Ammo Bar to characters who uses ammo mechanics
+
 ### 🎯 **Version 1.4.0 - "The Mouse Appointed"** *(Latest - December 25, 2025)*
 - **Dual Aiming System**: Toggle between Auto-Aim and Manual mouse aiming
 - **SPACEBAR Toggle**: Instantly switch aiming modes during gameplay
