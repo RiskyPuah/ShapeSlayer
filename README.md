@@ -463,7 +463,7 @@ All game balance is controlled via JSON files in `/data/`:
 - **Mod System**: Removed broken mod-template from loading sequence
 - **UI Polish**: Menu properly hides/shows with UI restoration
 
-### 🎯 **Version 1.3.0.2 - "Pierce Perfection"** *(Latest - December 25, 2025)*
+### 🎯 **Version 1.3.5 (Formerlly 1.3.0.2) - "Pierce Perfection"** *(Latest - December 25, 2025)*
 - **Complete Ammo System**: 4-shot magazine with tactical reload (5s)
 - **Visual Feedback**: Donut reload indicator, color-coded ammo display
 - **Ammo Pack Mechanics**: Drop behind player on hit (not kill), restore 1 ammo
