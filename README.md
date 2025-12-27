@@ -441,11 +441,11 @@ All game balance is controlled via JSON files in `/data/`:
 
 ## 🎉 Recent Updates
 
-### ⚙️**Version 1.4.2 -  Quality of Life Improvements**
+### ⚙️**Version 1.4.2 -  Quality of Life Improvements** *(Latest - December 27, 2025)*
 - **Auto aim UI Changes** - Moved the indicator to the right
 - **Ammo Bar visualization** - Added Ammo Bar to characters who uses ammo mechanics
 
-### 🎯 **Version 1.4.0 - "The Mouse Appointed"** *(Latest - December 25, 2025)*
+### 🎯 **Version 1.4.0 - "The Mouse Appointed"** *( December 25, 2025)*
 - **Dual Aiming System**: Toggle between Auto-Aim and Manual mouse aiming
 - **SPACEBAR Toggle**: Instantly switch aiming modes during gameplay
 - **Visual Feedback**: Crosshair indicator in manual mode, mode status UI
@@ -458,12 +458,12 @@ All game balance is controlled via JSON files in `/data/`:
 - **UI Improvements**: Restored game UI visibility, proper menu transitions
 - **Mod Integration**: Fixed mod loading sequence and character availability
 
-### 🔧 **Version 1.3.0.1 - "Navigation Fixes"**
+### 🔧 **Version 1.3.0.1 - "Navigation Fixes"** *(December 25, 2025)*
 - **Bug Fixes**: Fixed character selection auto-showing, mod manager blank screen
 - **Mod System**: Removed broken mod-template from loading sequence
 - **UI Polish**: Menu properly hides/shows with UI restoration
 
-### 🎯 **Version 1.3.5 (Formerlly 1.3.0.2) - "Pierce Perfection"** *(Latest - December 25, 2025)*
+### 🎯 **Version 1.3.5 (Formerlly 1.3.0.2) - "Pierce Perfection"** *(December 25, 2025)*
 - **Complete Ammo System**: 4-shot magazine with tactical reload (5s)
 - **Visual Feedback**: Donut reload indicator, color-coded ammo display
 - **Ammo Pack Mechanics**: Drop behind player on hit (not kill), restore 1 ammo
@@ -484,7 +484,7 @@ All game balance is controlled via JSON files in `/data/`:
 - **Improved Mod System**: Better integration and loading
 - **Bug Fixes**: Fixed mod paths and imports
 
-### 🃏 **Version 1.1.0 - Card Thrower & Elemental Effects**
+### 🃏 **Version 1.1.0 - Card Thrower & Elemental Effects** *(December 23, 2025)*
 - Card Thrower weapon with piercing mechanics
 - Pyromancer flamethrower weapon
 - Plague Doctor poison puddles
