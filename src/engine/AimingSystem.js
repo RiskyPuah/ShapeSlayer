@@ -164,8 +164,8 @@ export class AimingSystem {
             indicator.id = 'aim-mode-indicator';
             indicator.style.cssText = `
                 position: fixed;
-                top: 120px;
-                left: 10px;
+                top: 10px;
+                right: 10px;
                 background: rgba(0, 0, 0, 0.7);
                 color: white;
                 padding: 8px 12px;

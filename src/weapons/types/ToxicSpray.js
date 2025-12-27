@@ -182,60 +182,49 @@ export class ToxicSpray extends BaseWeapon {
         console.log(`💨 Toxic Spray fired 3 gas waves (${this.ammo} ammo left)`);
     }
     
-    // Update ammo display
+    // Update ammo display (now handled by canvas rendering)
     updateAmmoDisplay() {
-        const ammoDisplay = document.getElementById('ammo-display');
-        const ammoCount = document.getElementById('ammo-count');
-        const ammoMax = document.getElementById('ammo-max');
-        
-        if (ammoDisplay && ammoCount && ammoMax) {
-            ammoDisplay.style.display = 'block';
-            ammoCount.textContent = this.ammo;
-            ammoMax.textContent = this.maxAmmo;
-            
-            // Color coding based on ammo
-            if (this.ammo <= 0) {
-                ammoDisplay.style.color = '#ff4444'; // Red - empty
-            } else if (this.ammo === 1) {
-                ammoDisplay.style.color = '#ffaa44'; // Orange - low
-            } else {
-                ammoDisplay.style.color = '#88ff44'; // Toxic green - good
-            }
-        }
+        // No-op - ammo is now drawn on canvas above character
     }
     
-    // Draw reload indicator
+    // Draw ammo bars and reload indicator above character (Brawl Stars style)
     drawReloadIndicator(ctx) {
-        if (!this.isReloading) return;
+        if (!this.owner) return;
         
-        const reloadProgress = (Game.frameCount - this.reloadStartFrame) / this.reloadTime;
-        const progressAngle = reloadProgress * Math.PI * 2;
+        const x = this.owner.x;
+        const y = this.owner.y - 40;
+        const barWidth = 8;
+        const barHeight = 12;
+        const barSpacing = 3;
+        const totalWidth = (barWidth * this.maxAmmo) + (barSpacing * (this.maxAmmo - 1));
+        const startX = x - totalWidth / 2;
         
         ctx.save();
         
-        // Draw reload circle above player
-        const indicatorY = this.owner.y - 40;
-        
-        // Background circle
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 6;
-        ctx.beginPath();
-        ctx.arc(this.owner.x, indicatorY, 20, 0, Math.PI * 2);
-        ctx.stroke();
-        
-        // Progress arc (toxic green)
-        ctx.strokeStyle = '#88ff44';
-        ctx.lineWidth = 6;
-        ctx.beginPath();
-        ctx.arc(this.owner.x, indicatorY, 20, -Math.PI / 2, -Math.PI / 2 + progressAngle);
-        ctx.stroke();
-        
-        // Center text
-        ctx.fillStyle = '#88ff44';
-        ctx.font = 'bold 16px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('R', this.owner.x, indicatorY);
+        // Draw ammo bars
+        for (let i = 0; i < this.maxAmmo; i++) {
+            const barX = startX + (i * (barWidth + barSpacing));
+            
+            // Background bar
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(barX, y, barWidth, barHeight);
+            
+            if (i < this.ammo) {
+                // Full ammo bar
+                ctx.fillStyle = '#88ff44';
+                ctx.fillRect(barX, y, barWidth, barHeight);
+            } else if (i === this.ammo && this.isReloading) {
+                // Reloading bar
+                const progress = (Game.frameCount - this.reloadStartFrame) / this.reloadTime;
+                ctx.fillStyle = '#ffaa44';
+                ctx.fillRect(barX, y + barHeight * (1 - progress), barWidth, barHeight * progress);
+            }
+            
+            // Bar outline
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(barX, y, barWidth, barHeight);
+        }
         
         ctx.restore();
     }

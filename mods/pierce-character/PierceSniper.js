@@ -52,12 +52,9 @@ export class PierceSniper extends BaseWeapon {
         }
     }
     
-    // Update ammo display
+    // Update ammo display (now handled by canvas rendering)
     updateAmmoDisplay() {
-        const ammoCount = document.getElementById('ammo-count');
-        const ammoMax = document.getElementById('ammo-max');
-        if (ammoCount) ammoCount.textContent = this.ammo;
-        if (ammoMax) ammoMax.textContent = this.maxAmmo;
+        // No-op - ammo is now drawn on canvas above character
     }
     
     // Start reload process
@@ -185,34 +182,45 @@ export class PierceSniper extends BaseWeapon {
         console.log("📦 Ammo pack dropped behind player!");
     }
     
-    // Draw reload indicator (donut animation)
+    // Draw ammo bars and reload indicator above character (Brawl Stars style)
     drawReloadIndicator(ctx) {
-        if (!this.isReloading || !this.owner) return;
+        if (!this.owner) return;
         
         const x = this.owner.x;
-        const y = this.owner.y - 30; // Above player
-        const radius = 15;
-        const progress = (this.reloadTime - this.reloadTimer) / this.reloadTime;
+        const y = this.owner.y - 40;
+        const barWidth = 8;
+        const barHeight = 12;
+        const barSpacing = 3;
+        const totalWidth = (barWidth * this.maxAmmo) + (barSpacing * (this.maxAmmo - 1));
+        const startX = x - totalWidth / 2;
         
-        // Draw background circle
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-        ctx.lineWidth = 4;
-        ctx.stroke();
+        ctx.save();
         
-        // Draw progress arc (donut style)
-        ctx.beginPath();
-        ctx.arc(x, y, radius, -Math.PI / 2, (-Math.PI / 2) + (progress * Math.PI * 2));
-        ctx.strokeStyle = '#00aaff'; // Pierce blue color
-        ctx.lineWidth = 4;
-        ctx.stroke();
+        // Draw ammo bars
+        for (let i = 0; i < this.maxAmmo; i++) {
+            const barX = startX + (i * (barWidth + barSpacing));
+            
+            // Background bar
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(barX, y, barWidth, barHeight);
+            
+            if (i < this.ammo) {
+                // Full ammo bar (Pierce blue)
+                ctx.fillStyle = '#00aaff';
+                ctx.fillRect(barX, y, barWidth, barHeight);
+            } else if (i === this.ammo && this.isReloading) {
+                // Reloading bar
+                const progress = (this.reloadTime - this.reloadTimer) / this.reloadTime;
+                ctx.fillStyle = '#ffaa44';
+                ctx.fillRect(barX, y + barHeight * (1 - progress), barWidth, barHeight * progress);
+            }
+            
+            // Bar outline
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(barX, y, barWidth, barHeight);
+        }
         
-        // Draw inner text
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '12px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('R', x, y);
+        ctx.restore();
     }
 }

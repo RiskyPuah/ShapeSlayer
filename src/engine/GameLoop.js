@@ -378,7 +378,7 @@ export class GameLoop {
                 Game.player.weapon.drawArcEffect();
             }
             
-            // Draw Pierce Sniper reload indicator
+            // Draw ammo bars and reload indicator (for ammo-based weapons)
             if (Game.player.weapon && Game.player.weapon.drawReloadIndicator) {
                 Game.player.weapon.drawReloadIndicator(ctx);
             }
