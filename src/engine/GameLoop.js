@@ -211,6 +211,19 @@ export class GameLoop {
             return true;
         } else if (b.type === 'piercing') {
             return this.handlePiercingBullet(b, e, enemyIndex);
+        } else if (b.type === 'lumenBeam') {
+            // Lumen Beam: Create tether to enemy
+            const isDead = e.takeDamage(b.damage);
+            
+            if (b.lumenWeapon) {
+                b.lumenWeapon.createBeam(e);
+            }
+            
+            if (isDead) {
+                this.removeEnemy(e, enemyIndex, 0.1);
+            }
+            
+            return true; // Always remove projectile after creating beam
         } else {
             const isDead = e.takeDamage(b.damage);
             
@@ -370,6 +383,11 @@ export class GameLoop {
         Game.bullets.forEach(b => b.draw());
         Game.enemies.forEach(e => e.draw());
         Game.explosions.forEach(explosion => explosion.draw());
+        
+        // Draw Lumen beams (before player so they appear behind)
+        if (Game.player && Game.player.weapon && Game.player.weapon.drawBeams) {
+            Game.player.weapon.drawBeams(ctx);
+        }
         
         if (Game.player) {
             Game.player.draw();

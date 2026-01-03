@@ -1,9 +1,11 @@
 {
   "enabled": [
-    "pierce-character"
+    "pierce-character",
+    "lumen-character"
   ],
   "loadOrder": [
-    "pierce-character"
+    "pierce-character",
+    "lumen-character"
   ],
   "settings": {
     "autoLoadMods": true,

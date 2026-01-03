@@ -319,21 +319,29 @@ export class BaseWeapon {
     }
     
     update() {
+        // Get optional enemy filter from weapon (for smart targeting)
+        const filter = this.getEnemyFilter ? this.getEnemyFilter() : null;
+        
         // Get aiming target based on current mode (auto or manual)
-        const target = aimingSystem.getAimTarget(this.owner, () => this.getNearestEnemy());
+        const target = aimingSystem.getAimTarget(this.owner, (filterFn) => this.getNearestEnemy(filterFn), filter);
         if (target) {
             this.shoot(target.x, target.y);
         }
     }
     
     // Find the closest enemy to target
-    getNearestEnemy() {
+    getNearestEnemy(filterFn = null) {
         if (!Game.enemies || Game.enemies.length === 0) return null;
         
         let nearest = null;
         let minDist = Infinity;
         
         Game.enemies.forEach(enemy => {
+            // Apply filter if provided
+            if (filterFn && !filterFn(enemy)) {
+                return; // Skip this enemy
+            }
+            
             const dist = Math.hypot(enemy.x - this.owner.x, enemy.y - this.owner.y);
             if (dist < minDist) {
                 minDist = dist;

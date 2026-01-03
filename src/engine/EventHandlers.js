@@ -79,7 +79,7 @@ export class EventHandlers {
             
             // Handle ammo-based weapon reload with 'R' key
             if (event.key.toLowerCase() === 'r' && Game.player && Game.player.weapon) {
-                const ammoWeapons = ['pierceSniper', 'toxicSpray'];
+                const ammoWeapons = ['pierceSniper', 'toxicSpray', 'lumenBeam'];
                 if (ammoWeapons.includes(Game.player.weapon.type) && typeof Game.player.weapon.reload === 'function') {
                     Game.player.weapon.reload();
                     event.preventDefault();

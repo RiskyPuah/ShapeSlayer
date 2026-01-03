@@ -75,7 +75,7 @@ export class ModManager {
         // For now, we'll manually list known mods since we can't directory scan from browser
         // In a real implementation, this would scan the mods folder
         // Note: 'mod-template' is just a template, not a real mod
-        const knownMods = ['pierce-character'];
+        const knownMods = ['pierce-character', 'lumen-character'];
         
         for (const modId of knownMods) {
             try {

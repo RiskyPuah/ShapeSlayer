@@ -1,0 +1,15 @@
+{
+  "id": "lumen-character",
+  "name": "Lumen Character",
+  "version": "1.0.0",
+  "gameVersion": "1.0.0",
+  "author": "ShapeSlayer Team",
+  "description": "Lumen - Master of light beams. Fires projectiles that create persistent damage beams, tethering up to 3 enemies simultaneously.",
+  "enabled": true,
+  "content": {
+    "characters": ["lumen"],
+    "weapons": ["lumenBeam"]
+  },
+  "dependencies": [],
+  "loadOrder": 100
+}

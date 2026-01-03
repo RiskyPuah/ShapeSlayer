@@ -80,8 +80,9 @@ export class AimingSystem {
      * Get aiming target based on current mode
      * @param {Object} owner - The player or entity doing the aiming
      * @param {Function} getNearestEnemyFn - Function to get nearest enemy for auto-aim
+     * @param {Function} enemyFilterFn - Optional filter to exclude certain enemies from targeting
      */
-    getAimTarget(owner, getNearestEnemyFn) {
+    getAimTarget(owner, getNearestEnemyFn, enemyFilterFn = null) {
         if (this.mode === 'manual') {
             // Return mouse position
             return {
@@ -89,8 +90,8 @@ export class AimingSystem {
                 y: this.mouseY
             };
         } else {
-            // Return nearest enemy position
-            const enemy = getNearestEnemyFn();
+            // Return nearest enemy position (with optional filter)
+            const enemy = getNearestEnemyFn(enemyFilterFn);
             if (enemy) {
                 return {
                     x: enemy.x,
